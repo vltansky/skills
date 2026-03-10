@@ -192,7 +192,33 @@ For each alternative:
 [All GitHub URLs, docs, and sources cited in this RFC]
 ```
 
-### Phase 5: Deliver
+### Phase 5: Roast & Distill
+
+Before delivering, ruthlessly edit the RFC down to only what a senior engineer needs to make a decision. The goal is a short, high-signal document — not a comprehensive essay.
+
+**Kill on sight:**
+- Obvious statements ("We need good performance", "Security is important")
+- Generic risks that apply to literally any project ("Team needs to learn new tool", "Migration takes time")
+- Filler prior art that doesn't actually inform the decision — if a project is mentioned but doesn't change your recommendation, cut it
+- Hedging language ("It might be worth considering", "One could argue") — take a position or remove the sentence
+- Redundant alternatives where the "Why not" is already obvious from the proposal section
+- Empty open questions that are really just rephrased risks
+
+**Compress:**
+- Prior Art: keep only findings that directly influenced the proposal or ruled out an alternative. Max 3-4 entries.
+- Alternatives: only the 1-2 strongest contenders that a reviewer might actually push back with. Kill the rest.
+- Risks table: max 3 rows. If a risk is low-likelihood AND low-impact, it doesn't belong in the RFC.
+- Implementation outline: bullet points only, no paragraphs. Max 5-7 steps.
+- Design decisions table: every row must have an evidence link. No link = cut the row or find one.
+
+**Tighten:**
+- Summary should be exactly 2-3 sentences. If you need more, the proposal isn't clear enough.
+- Problem section: max 1 paragraph. If the reader doesn't feel the pain in 3 sentences, rewrite.
+- Total RFC length target: under 500 lines of markdown. If longer, keep cutting.
+
+Re-read the entire RFC after editing. If any section makes you think "obviously" — that section shouldn't exist.
+
+### Phase 6: Deliver
 
 1. Save the RFC to `docs/rfcs/NNNN-[slug].md`
 2. Present a summary in the conversation with key findings and the file path
