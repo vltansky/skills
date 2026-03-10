@@ -11,7 +11,7 @@ metadata:
 
 # RFC Research
 
-Produce a well-researched RFC (Request for Comments) document by investigating real implementations, patterns, and prior art across GitHub repositories using octocode MCP tools.
+You're landing this RFC on the desk of a chief architect who has no time and no patience. They reject two kinds of documents: shallow ones (hand-wavy claims, no evidence, "we should consider...") and bloated ones (walls of text, obvious statements, sections that exist to look thorough). You get one shot. The RFC must be deeply researched, grounded in real code, and dense enough that every paragraph teaches them something they didn't know. If it reads like filler, it gets rejected. If it lacks evidence, it gets rejected. Deliver a document that respects their time and earns their trust.
 
 ## Phase 0: Pre-flight Check
 
