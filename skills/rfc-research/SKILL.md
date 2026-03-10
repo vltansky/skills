@@ -192,39 +192,53 @@ For each alternative:
 [All GitHub URLs, docs, and sources cited in this RFC]
 ```
 
-### Phase 5: Roast & Distill
+### Phase 5: Roast & Distill (Subagent)
 
-Before delivering, ruthlessly edit the RFC down to only what a senior engineer needs to make a decision. The goal is a short, high-signal document — not a comprehensive essay.
+**Why a subagent:** The main agent is biased — it spent tokens researching, has sunk-cost attachment to findings, and sees every detail as important. A fresh subagent receives only the RFC text with zero research context. Its clean context window IS the objectivity. It reads the RFC the way a reviewer would: cold.
 
-**Kill on sight:**
+Spawn a subagent with the following prompt (pass the full RFC markdown as input):
+
+```
+You are a senior staff engineer reviewing an RFC you've never seen before. You have 5 minutes. Your job: cut this RFC down to only what's needed to make a decision, then return the edited version.
+
+## Kill on sight
 - Obvious statements ("We need good performance", "Security is important")
-- Generic risks that apply to literally any project ("Team needs to learn new tool", "Migration takes time")
-- Filler prior art that doesn't actually inform the decision — if a project is mentioned but doesn't change your recommendation, cut it
-- Hedging language ("It might be worth considering", "One could argue") — take a position or remove the sentence
-- Redundant alternatives where the "Why not" is already obvious from the proposal section
-- Empty open questions that are really just rephrased risks
+- Generic risks that apply to any project ("Team needs to learn new tool", "Migration takes time")
+- Filler prior art that doesn't inform the decision — if removing it doesn't change the recommendation, cut it
+- Hedging language ("It might be worth considering", "One could argue") — take a position or delete
+- Redundant alternatives where "Why not" is obvious from the proposal
+- Open questions that are just rephrased risks
 
-**Compress:**
-- Prior Art: keep only findings that directly influenced the proposal or ruled out an alternative. Max 3-4 entries.
-- Alternatives: only the 1-2 strongest contenders that a reviewer might actually push back with. Kill the rest.
-- Risks table: max 3 rows. If a risk is low-likelihood AND low-impact, it doesn't belong in the RFC.
-- Implementation outline: bullet points only, no paragraphs. Max 5-7 steps.
-- Design decisions table: every row must have an evidence link. No link = cut the row or find one.
+## Compress
+- Prior Art: max 3-4 entries that directly shaped the proposal
+- Alternatives: only 1-2 strongest contenders a reviewer might push back with
+- Risks: max 3 rows. Low-likelihood AND low-impact = cut
+- Implementation: bullet points only, max 5-7 steps
+- Design decisions: every row needs an evidence link. No link = cut or flag
 
-**Tighten:**
-- Summary should be exactly 2-3 sentences. If you need more, the proposal isn't clear enough.
-- Problem section: max 1 paragraph. If the reader doesn't feel the pain in 3 sentences, rewrite.
-- Total RFC length target: under 500 lines of markdown. If longer, keep cutting.
+## Shorten without losing substance
+- Rewrite paragraphs as single sentences
+- Replace prose with tables or bullet lists
+- Merge sections that say the same thing from different angles
+- Inline tiny sections into their parent heading
+- Code snippets over prose for behavior ("returns X when Y" → show code)
+- Cut transitions ("Now let's look at...", "As mentioned above...")
 
-**Shorten without losing substance:**
-- Rewrite verbose paragraphs as single direct sentences
-- Replace explanatory prose with tables or bullet lists — same info, half the words
-- Merge sections that repeat the same point from different angles
-- Inline short sections into their parent instead of giving them their own heading
-- Prefer code snippets over prose when describing behavior ("returns X when Y" → show the code)
-- Cut transition sentences ("Now let's look at...", "As mentioned above...") — the reader can follow headings
+## Targets
+- Summary: exactly 2-3 sentences
+- Problem: max 1 paragraph (3 sentences to feel the pain)
+- Total: under 500 lines of markdown
 
-The reader is a senior engineer with 5 minutes. Every sentence must earn its place. Re-read the entire RFC after editing — if any section makes you think "obviously", that section shouldn't exist.
+## Output
+Return the complete edited RFC markdown. Add a brief "## Roast Notes" section at the end listing what you cut and why (this section will be removed before delivery — it's for the main agent to review your cuts).
+
+If any section makes you think "obviously" — that section shouldn't exist.
+```
+
+After the subagent returns:
+1. Review the roast notes — if any cut removed genuinely important context, restore it
+2. Remove the "Roast Notes" section
+3. The result is the final RFC
 
 ### Phase 6: Deliver
 
