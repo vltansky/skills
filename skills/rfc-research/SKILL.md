@@ -216,7 +216,15 @@ Before delivering, ruthlessly edit the RFC down to only what a senior engineer n
 - Problem section: max 1 paragraph. If the reader doesn't feel the pain in 3 sentences, rewrite.
 - Total RFC length target: under 500 lines of markdown. If longer, keep cutting.
 
-Re-read the entire RFC after editing. If any section makes you think "obviously" — that section shouldn't exist.
+**Shorten without losing substance:**
+- Rewrite verbose paragraphs as single direct sentences
+- Replace explanatory prose with tables or bullet lists — same info, half the words
+- Merge sections that repeat the same point from different angles
+- Inline short sections into their parent instead of giving them their own heading
+- Prefer code snippets over prose when describing behavior ("returns X when Y" → show the code)
+- Cut transition sentences ("Now let's look at...", "As mentioned above...") — the reader can follow headings
+
+The reader is a senior engineer with 5 minutes. Every sentence must earn its place. Re-read the entire RFC after editing — if any section makes you think "obviously", that section shouldn't exist.
 
 ### Phase 6: Deliver
 
