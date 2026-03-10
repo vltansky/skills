@@ -194,13 +194,8 @@ For each alternative:
 
 ### Phase 5: Deliver
 
-1. Present the RFC in the conversation
-2. Use `AskUserQuestion` to collect feedback:
-   - "How should we proceed?" with options:
-     - "Save to file" (saves to `docs/rfcs/NNNN-[slug].md`)
-     - "Deeper research on specific sections" (follow up asking which sections)
-     - "Revise proposal" (follow up asking what to change)
-     - "Looks good" (done)
+1. Save the RFC to `docs/rfcs/NNNN-[slug].md`
+2. Present a summary in the conversation with key findings and the file path
 
 ## Research Quality Gates
 
