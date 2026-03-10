@@ -2,7 +2,6 @@
   "name": "vltansky-skills",
   "private": true,
   "scripts": {
-    "install:global": "npx -y skills add ./skills --all -g",
-    "install:project": "npx -y skills add ./skills --all"
+    "install:global": "npx -y skills add ./skills --all -g"
   }
 }
