@@ -1,0 +1,23 @@
+{
+  "name": "what-i-did",
+  "version": "1.0.0",
+  "description": "Summarize your GitHub activity from the last 24 hours across all repos",
+  "keywords": [
+    "git",
+    "activity",
+    "standup",
+    "recap",
+    "skills",
+    "claude",
+    "cursor",
+    "codex",
+    "ai",
+    "agents"
+  ],
+  "author": "Vlad Tansky",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vltansky/skills"
+  }
+}
