@@ -23,6 +23,7 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 | [rfc-research](skills/rfc-research) | Research a topic and produce an RFC backed by real GitHub code evidence |
 | [debug](skills/debug-skill) | Runtime debugging with automated log collection |
 | [chat-history](skills/chat-history-skill) | Search previous AI chat conversations from Cursor and Claude Code |
+| [what-i-did](skills/what-i-did) | Summarize your GitHub activity from the last 24 hours across all repos |
 
 ## License
 
