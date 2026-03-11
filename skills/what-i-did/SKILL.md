@@ -41,7 +41,7 @@ Events API omits commit messages for private repos. Use `gh search commits` to g
 # Public repos
 gh search commits --author=$GH_USER --committer-date=">$SINCE" --json repository,sha,commit --limit 100
 
-# For each private org found in events (e.g., wix-private):
+# For each private org found in events:
 gh search commits --author=$GH_USER --owner=<org> --committer-date=">$SINCE" --json repository,sha,commit --limit 100
 ```
 

@@ -8,8 +8,7 @@ Open-source collection of [Agent Skills](https://agentskills.io) for Claude Code
 skills/
   <skill-name>/
     SKILL.md         # Skill prompt (frontmatter + instructions)
-    package.json     # Name, description, keywords, license
-    README.md        # Optional — usage docs
+    README.md        # Install instructions, usage, prerequisites
 ```
 
 ## Adding or Editing Skills
@@ -35,20 +34,18 @@ The body contains the skill's instructions in markdown.
 4. **Minimal dependencies** — prefer CLI tools users already have (`gh`, `git`, `node`, `npx`). If a skill needs something uncommon, document it in prerequisites.
 5. **MIT license** — all contributions are MIT-licensed.
 
-### package.json
+### README.md (required)
 
-Keep it minimal:
+Every skill must include a `README.md` with:
+- One-line description
+- Install commands (`npx skills add` and manual `cp` alternative)
+- Prerequisites (CLI tools, auth, etc.)
+- Usage examples (trigger phrases)
+- License
 
-```json
-{
-  "name": "skill-name",
-  "version": "1.0.0",
-  "description": "What the skill does",
-  "keywords": ["skills", "claude", "cursor", "codex", "ai", "agents"],
-  "author": "Your Name",
-  "license": "MIT"
-}
-```
+When adding or modifying a skill, always update:
+1. The skill's own `README.md`
+2. The root `README.md` skills table (add new skills, update descriptions)
 
 ### Before committing
 
