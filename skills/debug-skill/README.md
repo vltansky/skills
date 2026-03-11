@@ -16,16 +16,16 @@ Runtime agnostic - works anywhere with localhost access.
 ### Quick Install (recommended)
 
 ```bash
-npx add-skill vltansky/debug-skill
+npx skills add https://github.com/vltansky/skills --skill debug
 ```
 
 Installs to all detected agents (Claude Code, OpenCode, Codex, Cursor, Antigravity).
 
 **Options:**
 ```bash
-npx add-skill vltansky/debug-skill --global    # Install globally
-npx add-skill vltansky/debug-skill -a claude-code  # Specific agent
-npx add-skill vltansky/debug-skill -g -y       # CI/CD (no prompts)
+npx skills add https://github.com/vltansky/skills --skill debug -g
+npx skills add https://github.com/vltansky/skills --skill debug --agent claude-code
+npx skills add https://github.com/vltansky/skills --skill debug -g -y
 ```
 
 ### Claude Code Plugin
@@ -37,8 +37,8 @@ npx add-skill vltansky/debug-skill -g -y       # CI/CD (no prompts)
 ### Manual
 
 ```bash
-git clone https://github.com/vltansky/debug-skill.git
-cp -r debug-skill ~/.claude/skills/debug
+git clone https://github.com/vltansky/skills.git
+cp -r skills/debug-skill ~/.claude/skills/debug
 ```
 
 ## Usage

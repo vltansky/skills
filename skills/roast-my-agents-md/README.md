@@ -17,12 +17,20 @@ In controlled testing, **25 of 26 assertions passed identically** with and witho
 ## Install
 
 ```bash
-npx skills add vltansky/roast-my-agents-md
+npx skills add https://github.com/vltansky/skills --skill roast-my-agents-md
+```
+
+Useful variants:
+
+```bash
+npx skills add https://github.com/vltansky/skills --skill roast-my-agents-md -g
+npx skills add https://github.com/vltansky/skills --skill roast-my-agents-md -g -y
 ```
 
 Or manually:
 ```bash
-git clone https://github.com/vltansky/roast-my-agents-md.git ~/.claude/skills/roast-my-agents-md
+git clone https://github.com/vltansky/skills.git
+cp -r skills/roast-my-agents-md ~/.claude/skills/roast-my-agents-md
 ```
 
 ## Usage

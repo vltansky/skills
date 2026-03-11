@@ -17,25 +17,26 @@ Search previous AI chat conversations from **Cursor IDE** and **Claude Code** by
 
 ## Installation
 
-### npx add-skill (Recommended)
+### skills CLI (Recommended)
 
-The simplest way to install. Works with Claude Code, Cursor, OpenCode, and Codex:
+Install the `chat-history` skill from this repo:
 
 ```bash
-npx add-skill vltansky/chat-history-skill
+npx skills add https://github.com/vltansky/skills --skill chat-history
 ```
 
-The interactive picker displays available skills. Use `--global` for user-wide installation:
+Useful variants:
 
 ```bash
-npx add-skill vltansky/chat-history-skill --global
+npx skills add https://github.com/vltansky/skills --skill chat-history -g
+npx skills add https://github.com/vltansky/skills --skill chat-history -g -y
 ```
 
 Target specific agent:
 
 ```bash
-npx add-skill vltansky/chat-history-skill --agent claude-code
-npx add-skill vltansky/chat-history-skill --agent cursor
+npx skills add https://github.com/vltansky/skills --skill chat-history --agent claude-code
+npx skills add https://github.com/vltansky/skills --skill chat-history --agent cursor
 ```
 
 ### Manual Installation
@@ -43,28 +44,27 @@ npx add-skill vltansky/chat-history-skill --agent cursor
 #### Claude Code
 
 ```bash
-# Clone and copy
-git clone https://github.com/vltansky/chat-history-skill.git
-cp -r chat-history-skill/chat-history ~/.claude/skills/
+git clone https://github.com/vltansky/skills.git
+cp -r skills/chat-history-skill/chat-history ~/.claude/skills/chat-history
 ```
 
 Or project-local:
 
 ```bash
 mkdir -p .claude/skills
-cp -r chat-history-skill/chat-history .claude/skills/
+cp -r skills/chat-history-skill/chat-history .claude/skills/chat-history
 ```
 
 #### Cursor
 
 ```bash
-cp -r chat-history-skill/chat-history ~/.cursor/skills/
+cp -r skills/chat-history-skill/chat-history ~/.cursor/skills/chat-history
 ```
 
 #### OpenCode
 
 ```bash
-cp -r chat-history-skill/chat-history ~/.config/opencode/skill/
+cp -r skills/chat-history-skill/chat-history ~/.config/opencode/skill/chat-history
 ```
 
 ## Usage Examples

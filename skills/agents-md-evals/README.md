@@ -20,13 +20,21 @@ The rules that actually matter are the ones the codebase can't teach: coupling k
 ## Install
 
 ```bash
-npx skills add vltansky/agents-md-evals
+npx skills add https://github.com/vltansky/skills --skill agents-md-evals
 ```
 
-Or manually clone into your skills directory:
+Optional flags:
 
 ```bash
-git clone https://github.com/vltansky/agents-md-evals.git ~/.claude/skills/agents-md-evals
+npx skills add https://github.com/vltansky/skills --skill agents-md-evals -g
+npx skills add https://github.com/vltansky/skills --skill agents-md-evals -g -y
+```
+
+Or manually clone this repo and copy the skill into your agent's skills directory:
+
+```bash
+git clone https://github.com/vltansky/skills.git
+cp -r skills/agents-md-evals ~/.claude/skills/agents-md-evals
 ```
 
 ## Usage

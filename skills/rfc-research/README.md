@@ -38,13 +38,21 @@ Full template available in [`references/rfc-template.md`](references/rfc-templat
 ### Via skills CLI
 
 ```bash
-npx skills add vltansky/rfc-research
+npx skills add https://github.com/vltansky/skills --skill rfc-research
+```
+
+Useful variants:
+
+```bash
+npx skills add https://github.com/vltansky/skills --skill rfc-research -g
+npx skills add https://github.com/vltansky/skills --skill rfc-research -g -y
 ```
 
 ### Manual
 
 ```bash
-git clone https://github.com/vltansky/rfc-research.git ~/.claude/skills/rfc-research
+git clone https://github.com/vltansky/skills.git
+cp -r skills/rfc-research ~/.claude/skills/rfc-research
 ```
 
 ## Usage
