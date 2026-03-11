@@ -72,16 +72,34 @@ Group everything by repo. For each repo show:
 **Reviews & Comments** (N)
 ```
 
-### Step 6: Daily narrative
+### Step 6: Totals
 
-Write a short standup-style paragraph (3-5 sentences) summarizing what was accomplished, the themes, and focus areas. Conversational tone.
-
-End with totals:
+End the detailed log with totals:
 
 ```
 ---
 Totals: X commits across Y repos | Z PRs | W reviews/comments
 ```
+
+### Step 7: Slack-ready summary
+
+After the full commit log, add a clearly separated section:
+
+```
+---
+
+## TL;DR — share this in Slack
+
+<human-readable summary here>
+```
+
+Write this as a casual, first-person message you'd actually post in a team Slack channel. Rules for this section:
+- Sound like a human, not a changelog — "Wrapped up the auth migration, fixed a nasty race condition in the queue worker, and reviewed a couple of PRs" not "Committed 3 files to auth-service"
+- Group related commits into themes/accomplishments — don't list individual commits
+- Mention PRs by what they do, not by number
+- Keep it to 2-4 sentences max
+- No markdown headers, bullet lists, or code formatting — just plain text a person would type
+- If there were reviews/comments, mention them naturally ("also reviewed X's PR on ...")
 
 ## Rules
 
