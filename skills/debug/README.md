@@ -28,17 +28,11 @@ npx skills add https://github.com/vltansky/skills --skill debug --agent claude-c
 npx skills add https://github.com/vltansky/skills --skill debug -g -y
 ```
 
-### Claude Code Plugin
-
-```bash
-/install vltansky/debug-skill
-```
-
 ### Manual
 
 ```bash
 git clone https://github.com/vltansky/skills.git
-cp -r skills/debug-skill ~/.claude/skills/debug
+cp -r skills/debug ~/.claude/skills/debug
 ```
 
 ## Usage
@@ -79,7 +73,7 @@ To skip permission prompts, add to `~/.claude/settings.json`:
 ## Structure
 
 ```
-debug-skill/
+debug/
 ├── SKILL.md              # Skill instructions
 └── scripts/
     ├── debug_server.js   # Log server
