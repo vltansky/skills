@@ -1,5 +1,5 @@
 ---
-name: skill-ab-test
+name: skill-ab-eval
 description: A/B test skill changes to measure improvement before committing. Use when the user says "test my skill changes", "A/B test this skill", "compare old vs new skill", "benchmark skill improvement", "did my changes help", "eval skill changes", or has made changes to a SKILL.md and wants to know if they actually improved behavior.
 ---
 

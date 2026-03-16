@@ -1,4 +1,4 @@
-# skill-ab-test
+# skill-ab-eval
 
 A/B test skill changes to measure whether modifications actually improve agent behavior.
 
@@ -10,10 +10,10 @@ When you modify a skill (SKILL.md, references, scripts), this skill runs control
 
 ```bash
 # Via npx
-npx skills add vltansky/skills/skills/skill-ab-test -g -y
+npx skills add vltansky/skills/skills/skill-ab-eval -g -y
 
 # Manual
-cp -r skills/skill-ab-test ~/.claude/skills/skill-ab-test
+cp -r skills/skill-ab-eval ~/.claude/skills/skill-ab-eval
 ```
 
 ## Prerequisites

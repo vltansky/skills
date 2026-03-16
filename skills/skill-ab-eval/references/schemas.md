@@ -1,6 +1,6 @@
 # JSON Schemas
 
-Schemas used by skill-ab-test.
+Schemas used by skill-ab-eval.
 
 ---
 
