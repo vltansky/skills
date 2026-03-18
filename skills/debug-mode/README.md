@@ -1,4 +1,4 @@
-# Debug Skill
+# Debug Mode Skill
 
 Ported [Cursor's Debug Mode](https://cursor.com/blog/debug-mode) as a skill for Claude Code, OpenCode, Codex, Cursor, and any agent that supports skills.
 
@@ -16,23 +16,23 @@ Runtime agnostic - works anywhere with localhost access.
 ### Quick Install (recommended)
 
 ```bash
-npx skills add https://github.com/vltansky/skills --skill debug
+npx skills add https://github.com/vltansky/skills --skill debug-mode
 ```
 
 Installs to all detected agents (Claude Code, OpenCode, Codex, Cursor, Antigravity).
 
 **Options:**
 ```bash
-npx skills add https://github.com/vltansky/skills --skill debug -g
-npx skills add https://github.com/vltansky/skills --skill debug --agent claude-code
-npx skills add https://github.com/vltansky/skills --skill debug -g -y
+npx skills add https://github.com/vltansky/skills --skill debug-mode -g
+npx skills add https://github.com/vltansky/skills --skill debug-mode --agent claude-code
+npx skills add https://github.com/vltansky/skills --skill debug-mode -g -y
 ```
 
 ### Manual
 
 ```bash
 git clone https://github.com/vltansky/skills.git
-cp -r skills/debug ~/.claude/skills/debug
+cp -r skills/debug-mode ~/.claude/skills/debug-mode/
 ```
 
 ## Usage
@@ -54,9 +54,9 @@ To skip permission prompts, add to `~/.claude/settings.json`:
 
 ```json
 {
-  "permissions": {
-    "allow": ["Skill(debug:debug)", "Bash(node:*)"]
-  }
+    "permissions": {
+      "allow": ["Skill(debug-mode:debug-mode)", "Bash(node:*)"]
+    }
 }
 ```
 
@@ -64,16 +64,16 @@ To skip permission prompts, add to `~/.claude/settings.json`:
 
 | Agent | Global Path | Project Path |
 |-------|-------------|--------------|
-| Claude Code | `~/.claude/skills/debug/` | `.claude/skills/debug/` |
-| OpenCode | `~/.config/opencode/skill/debug/` | `.opencode/skill/debug/` |
-| Codex | `~/.codex/skills/debug/` | `.codex/skills/debug/` |
-| Cursor | `~/.cursor/skills/debug/` | `.cursor/skills/debug/` |
-| Antigravity | `~/.gemini/antigravity/skills/debug/` | `.agent/skills/debug/` |
+| Claude Code | `~/.claude/skills/debug-mode/` | `.claude/skills/debug-mode/` |
+| OpenCode | `~/.config/opencode/skill/debug-mode/` | `.opencode/skill/debug-mode/` |
+| Codex | `~/.codex/skills/debug-mode/` | `.codex/skills/debug-mode/` |
+| Cursor | `~/.cursor/skills/debug-mode/` | `.cursor/skills/debug-mode/` |
+| Antigravity | `~/.gemini/antigravity/skills/debug-mode/` | `.agent/skills/debug-mode/` |
 
 ## Structure
 
 ```
-debug/
+debug-mode/
 ├── SKILL.md              # Skill instructions
 └── scripts/
     ├── debug_server.js   # Log server
