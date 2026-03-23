@@ -18,6 +18,10 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 
 | Skill | Description |
 |-------|-------------|
+| [brainstorming](skills/brainstorming) | Explore intent and design before implementation; optional visual companion server |
+| [grill-me](skills/grill-me) | Adversarial stress-test interview for plans and designs (report, not code) |
+| [interview](skills/interview) | Branching interview to refine a plan into an implementation-ready spec |
+| [interview-octocode](skills/interview-octocode) | Plan interview with Octocode research first, user questions batched last |
 | [roast-my-agents-md](skills/roast-my-agents-md) | Brutally honest AGENTS.md/CLAUDE.md review backed by A/B test evidence |
 | [agents-md-evals](skills/agents-md-evals) | Evaluate and optimize instruction files through controlled A/B testing |
 | [rfc-research](skills/rfc-research) | Research a topic and produce an RFC backed by real GitHub code evidence |
