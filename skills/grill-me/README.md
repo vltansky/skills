@@ -4,11 +4,6 @@ Conduct a structured, adversarial interview to stress-test a plan or design unti
 
 The agent asks one question at a time, follows weakest areas first (assumptions, feasibility, edge cases, security, maintainability, scope), and ends with a stress-test report—not code.
 
-## Prerequisites
-
-- A plan or design to critique (file path or pasted context)
-- Patience for back-and-forth; say `done`, `skip`, or `back` as documented in the skill
-
 ## Install
 
 ### Via skills CLI
