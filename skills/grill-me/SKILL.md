@@ -14,11 +14,12 @@ Do NOT write code or begin implementation. The output of this skill is a stress-
 ## Critical Rules
 
 1. **ONE question at a time** — never bundle questions
-2. **Devil's advocate** — assume flaws exist; your job is to find them
-3. **Probe weakness** — if an answer is vague or hand-wavy, dig deeper on that branch before moving on
-4. **Codebase over questions** — if a question can be answered by exploring the codebase, explore silently and present findings instead of asking
-5. **Recommend with every question** — provide your suggested answer and why
-6. **Show progress** — display dimension, question count, and plan robustness %
+2. **Use interactive prompts** — for every interactive prompt (dimension gates, each grilling turn, continue/skip/done, early exit), use the host’s tool when available: Cursor **`AskQuestion`**, Codex **`request_user_input`**, Claude Code **`AskUserQuestion`** / **`AskUserQuestionTool`**. Include your recommended stance as an option plus alternatives such as defending a different choice, **I don't know**, **done**, **skip**, **back** as the flow requires. If no interactive tool exists, fall back to a single numbered or labeled reply block and wait for the user’s answer in chat.
+3. **Devil's advocate** — assume flaws exist; your job is to find them
+4. **Probe weakness** — if an answer is vague or hand-wavy, dig deeper on that branch before moving on
+5. **Codebase over questions** — if a question can be answered by exploring the codebase, explore silently and present findings instead of asking
+6. **Recommend with every question** — provide your suggested answer and why (surface it inside the interactive tool’s options where it fits)
+7. **Show progress** — display dimension, question count, and plan robustness %
 
 ## Step 0: Read Plan + Initial Assessment
 
@@ -62,11 +63,11 @@ For each dimension:
    Skip this dimension? (y/n)
    ```
 
-2. **Ask one question at a time:**
-   - State the weakness or concern you see
-   - Ask the user to defend their decision
-   - Provide your recommended answer and reasoning
+2. **Ask one question at a time (via `AskQuestion` / `request_user_input` / `AskUserQuestion` when available):**
+   - State the weakness or concern you see (in the question text or preamble)
+   - Ask the user to defend their decision; provide your recommended answer and reasoning
    - Rate the concern: `[high]` `[medium]` `[low]`
+   - **Call the interactive tool** with one question and a small set of options (e.g. defend with your own reasoning, accept the recommendation, **I don't know**, **done**, **skip**, **back**) — never rely on freeform chat alone when the tool is available
 
 3. **Branch on weak answers:**
    - Strong answer → move to next question
