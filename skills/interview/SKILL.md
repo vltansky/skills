@@ -5,11 +5,11 @@ description: Conduct a structured, branching interview to refine a plan into an 
 
 # Plan Interview
 
-Deep-dive interview to refine a plan into an actionable spec using an interactive question tool when available.
+Deep-dive interview to refine a plan into an actionable spec using the **ask user question tool** when available.
 
 ## Critical Rules
 
-1. **USE interactive tool if available** - use structured choices in an interactive question tool; otherwise use numbered inline options
+1. **USE ask user question tool if available** — structured choices via the host’s ask user question tool; otherwise numbered inline options
 2. **ALWAYS show progress** - display section, question count, and confidence %
 3. **NEVER ask obvious questions** - skip anything inferable from context
 4. **WAIT between sections** - let user opt-out before each block
@@ -117,7 +117,7 @@ When user says "done" or all sections complete:
 - mark recommendation only when confidence >70%
 - always include `other` option for open-ended paths
 
-**Question format (interactive):**
+**Question format (ask user question tool):**
 ```
 --- ARCHITECTURE (1/6) ---
 [State 1/4] ~3 min left

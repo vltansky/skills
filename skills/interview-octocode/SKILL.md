@@ -17,7 +17,7 @@ READ PLAN → RESEARCH LOOP → SUMMARIZE → ASK REMAINING → GENERATE SPEC
 
 1. **RESEARCH FIRST** - Try to answer every question via Octocode before asking user
 2. **BATCH USER QUESTIONS** - Collect all low-confidence items, ask at end
-3. **USE interactive tool** - Claude Code: `AskUserQuestionTool`, others: numbered inline
+3. **USE ask user question tool** — when the host provides it; otherwise numbered inline options
 4. **SHOW YOUR WORK** - Display research findings as you go
 
 ## Confidence Levels
@@ -134,7 +134,7 @@ Ready to ask 5 questions. Continue? (y/n)
 
 ### Step 3: Interactive Questions (batch)
 
-Ask all remaining questions using `AskUserQuestionTool`:
+Ask all remaining questions using the **ask user question tool** (or numbered inline if unavailable):
 
 **MED confidence (confirm or override):**
 

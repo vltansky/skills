@@ -34,6 +34,10 @@ The body contains the skill's instructions in markdown.
 4. **Minimal dependencies** — prefer CLI tools users already have (`gh`, `git`, `node`, `npx`). If a skill needs something uncommon, document it in prerequisites.
 5. **MIT license** — all contributions are MIT-licensed.
 
+### Interactive prompts in skills
+
+When a skill needs the agent to ask the user questions one step at a time (interviews, gates, confirmations), instruct use of the host’s **ask user question tool** when it exists. Do not list product-specific tool names in `SKILL.md`. If the host has no such tool, document a clear fallback (for example a numbered or labeled reply block). See [grill-me](skills/grill-me) for the pattern.
+
 ### README.md (required)
 
 Every skill must include a `README.md` with:

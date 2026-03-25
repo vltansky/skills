@@ -46,7 +46,7 @@ Do NOT proceed without octocode MCP. The skill cannot produce evidence-backed RF
 
 ### Phase 1: Scope the RFC
 
-Use `AskUserQuestion` to clarify scope before researching. Only ask about what's missing or ambiguous from the user's request — skip questions you can infer.
+Use the **ask user question tool** to clarify scope before researching. Only ask about what's missing or ambiguous from the user's request — skip questions you can infer. If the host has no such tool, use numbered or labeled reply options.
 
 **Question 1 — Problem & scope** (ask if problem statement is vague):
 - "What specific problem are you trying to solve?" with options based on what you inferred from their request

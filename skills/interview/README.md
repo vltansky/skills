@@ -7,7 +7,7 @@ Sections cover architecture, core logic, integration, UI/UX, edge cases, and pol
 ## Prerequisites
 
 - A plan to refine (file path or pasted content)
-- Optional: interactive question tooling if your agent supports it (the skill falls back to numbered options)
+- Optional: **ask user question tool** if your host supports it (the skill falls back to numbered options)
 
 ## Install
 

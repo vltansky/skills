@@ -2,7 +2,7 @@
 
 Conduct a structured, adversarial interview to stress-test a plan or design until weaknesses and risky assumptions surface—before implementation.
 
-The agent asks one question at a time using the host’s interactive tool when available (**`AskQuestion`** in Cursor, **`request_user_input`** in Codex, **`AskUserQuestion`** in Claude Code), follows weakest areas first (assumptions, feasibility, edge cases, security, maintainability, scope), and ends with a stress-test report—not code.
+The agent asks one question at a time using the host’s **ask user question tool** when available, follows weakest areas first (assumptions, feasibility, edge cases, security, maintainability, scope), and ends with a stress-test report—not code.
 
 ## Install
 
