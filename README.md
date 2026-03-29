@@ -18,6 +18,7 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 
 | Skill | Description |
 |-------|-------------|
+| [batch](skills/batch) | Parallel work orchestration — decompose large changes into 5-30 worktree agents |
 | [brainstorming](skills/brainstorming) | Explore intent and design before implementation; optional visual companion server |
 | [grill-me](skills/grill-me) | Adversarial stress-test interview (ask user question tool); report, not code |
 | [interview](skills/interview) | Branching interview to refine a plan into an implementation-ready spec |
@@ -27,7 +28,7 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 | [rfc-research](skills/rfc-research) | Research a topic and produce an RFC backed by real GitHub code evidence |
 | [debug](skills/debug-skill) | Runtime debugging with automated log collection |
 | [chat-history](skills/chat-history-skill) | Search previous AI chat conversations from Cursor and Claude Code |
-| [simplifier](skills/simplifier) | Review changed code for reuse, quality, and efficiency, then fix issues |
+| [simplify](skills/simplify) | Review changed code for reuse, quality, and efficiency, then fix issues |
 | [what-i-did](skills/what-i-did) | Summarize your GitHub activity from the last 24 hours across all repos |
 
 ## License
