@@ -1,0 +1,23 @@
+{
+  "skill_name": "grill-me",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Grill me about this plan: add a background sync worker, a Redis cache, and a webhook retry queue to fix a flaky notification endpoint.",
+      "expected_output": "Challenges whether the problem framing is correct, proposes at least two approaches, batches tightly related questions when useful, and identifies feasibility and scope risks.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Stress-test this design before implementation: a new admin dashboard that aggregates customer data from three services and exposes bulk actions.",
+      "expected_output": "Pushes back on the premise, probes authorization and edge cases, and ends with a scored stress-test report and readiness verdict.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Poke holes in my approach: I want to rebuild our onboarding flow as a micro-frontend so teams can ship independently.",
+      "expected_output": "Questions whether a rebuild is justified, compares minimal and long-term alternatives, and surfaces maintainability and operational risks.",
+      "files": []
+    }
+  ]
+}
