@@ -1,14 +1,14 @@
-# Simplifier
+# Simplify
 
 Review changed code for reuse, quality, and efficiency, then fix any issues found.
 
 ## Install
 
 ```bash
-npx skills add vltansky/skills/skills/simplifier -g -y
+npx skills add vltansky/skills/skills/simplify -g -y
 ```
 
-Or manually copy the `skills/simplifier` directory to your agent's skills folder.
+Or manually copy the `skills/simplify` directory to your agent's skills folder.
 
 ## Prerequisites
 
