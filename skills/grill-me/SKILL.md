@@ -60,22 +60,10 @@ If you find a strong reason the conventional approach is wrong, name it explicit
 
 If the host supports background subagents, use them to prepare evidence for the next batch while the main review continues.
 
-Good uses:
-
-- explore the codebase for existing implementations, constraints, and reuse opportunities
-- inspect docs, specs, or adjacent modules tied to the next dimension
-- prepare likely follow-up branches for the next decision cluster
-- gather evidence for alternatives before the next ask-user turn
-
-Bad uses:
-
-- asking the user questions
-- making the final recommendation
-- owning the scoring or final verdict
-- doing the current blocking work instead of the main agent
-
 Rules:
 
+- use them for code/doc exploration, evidence gathering, and prep for the next branch
+- do not use them for user questions, final recommendations, scoring, or the blocking decision in front of you
 - the main agent owns the live conversation, scoring, and verdict
 - subagents are prep workers, not decision makers
 - only spawn for the **next** dimension or branch, not the current blocking question
@@ -162,17 +150,10 @@ Where useful, label each approach as tried-and-true, new-and-popular, or first-p
 
 ## User Sovereignty
 
-The user has context you do not:
-
-- domain knowledge
-- business relationships
-- strategic timing
-- taste and political constraints
-
-Your job is to pressure-test the plan, not to seize control of it.
-
 Rules:
 
+- the user has context you do not: domain knowledge, business relationships, strategic timing, and taste
+- pressure-test the plan, do not seize control of it
 - never ask the user something that is obvious from the repo or context
 - never spend a user turn on a routine implementation detail unless it materially changes the recommendation
 - if the answer can be inferred with reasonable confidence, infer it and keep moving
@@ -238,13 +219,10 @@ Use a batched ask-user turn when all of the following are true:
 - the user can answer them together without ambiguity
 - none of them is a standalone high-severity blocker that deserves its own spotlight
 
-Good batch:
+Example:
 
-- "What is the real failure mode, how often does it happen, and what evidence do we have?"
-
-Bad batch:
-
-- "How should auth work, do we need Redis, and what should the UX be?"
+- good: "What is the real failure mode, how often does it happen, and what evidence do we have?"
+- bad: "How should auth work, do we need Redis, and what should the UX be?"
 
 Batching limits:
 
