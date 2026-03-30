@@ -4,23 +4,7 @@ Structured adversarial review for plans and designs.
 
 `grill-me` is not a friendly brainstorming assistant. It is the skill you run when you want pushback before implementation starts.
 
-It challenges the premise, compares alternatives, batches tightly related questions when that is faster, drills into weak branches one at a time when needed, scores readiness with a calibrated rubric, and finishes with a stress-test report and verdict.
-
-When the host supports background subagents, `grill-me` can also use them to prepare the next batch of evidence while the main agent keeps the live review moving.
-
-It should treat the user as a scarce, high-value resource: do not ask obvious questions, and never turn outside analysis into an automatic decision.
-
-## What changed in v2
-
-- Pushes back on the framing first, not just the implementation details
-- Requires at least 2 approaches before settling on the plan under review
-- Uses a fixed question format with recommendation, impact, and clear options
-- Avoids obvious questions and only escalates real decision points to the user
-- Searches existing patterns first, then reasons across tried-and-true, new-and-popular, and first-principles layers
-- Names a `Eureka` explicitly when it finds a strong reason the conventional approach is wrong
-- Scores readiness on a weighted 100-point rubric
-- Produces a verdict: `READY`, `READY_WITH_RISKS`, or `NOT_READY`
-- Persists a report to disk when a sensible project docs path exists
+It challenges the premise, compares alternatives, forces concrete choices (not vague acknowledgments), drills into weak branches until you defend or concede, scores readiness with a calibrated rubric, and finishes with a stress-test report and verdict.
 
 ## Install
 
@@ -62,11 +46,13 @@ Trigger phrases:
 
 Expected behavior:
 
-1. Reads the plan and nearby code/docs
-2. Challenges the premise before debating implementation details
-3. Produces at least 2 approaches with a recommendation
-4. Uses small batched question clusters when safe, then drills into weak answers one branch at a time
-5. Ends with a scored stress-test report and readiness verdict
+1. Pre-scans the codebase for overlap, broken assumptions, and alternatives
+2. Presents initial assessment with pre-scan findings
+3. Challenges the premise before debating implementation details
+4. Produces at least 2 approaches with a recommendation
+5. Forces concrete defenses — drills into vague answers instead of moving on
+6. Ends with a scored stress-test report and readiness verdict
+7. Optionally runs an outside voice for blind-spot detection
 
 ## File Layout
 

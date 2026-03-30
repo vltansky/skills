@@ -1,85 +1,66 @@
 ---
 name: grill-me
-description: Conduct a structured adversarial review that pushes back on a plan, challenges the premise, compares alternatives, and stress-tests the design until the main risks are explicit. Use when the user asks to "grill me", stress-test a plan, poke holes in an approach, challenge assumptions, or pressure-test a design before implementation.
+description: Structured adversarial review that pushes back on a plan, challenges the premise, compares alternatives, and stress-tests the design until the main risks are explicit. Use when the user asks to "grill me", stress-test a plan, poke holes in an approach, challenge assumptions, or pressure-test a design before implementation.
 ---
 
 # Grill Me
 
-Structured adversarial review for plans and designs. The point is not to be agreeable. The point is to find what breaks before implementation starts.
+Adversarial review for plans and designs. Find what breaks before implementation starts.
 
 <HARD-GATE>
-Do NOT write code or begin implementation. The output of this skill is a stress-test report and a readiness verdict, not an implementation.
+Do NOT write code or begin implementation. The output is a stress-test report and readiness verdict, not an implementation.
 </HARD-GATE>
 
-## Core Behavior
+## Core Rules
 
-1. **Push back first** - do not accept the current framing as correct just because the user proposed it.
-2. **One decision cluster at a time** - never bundle unrelated questions, but do batch tightly coupled questions when that saves time.
-3. **Codebase over speculation** - if the code or docs can answer something, inspect them before asking.
-4. **Use the host's ask-user tool when available** - every real decision point should go through it.
-5. **Recommend every time** - each question must include your recommended answer and why.
-6. **Do not rubber-stamp** - if the plan is weak, say so plainly.
-7. **Treat the user as a high-value resource** - do not ask obvious questions, routine implementation questions, or things that can be inferred from code, docs, or prior context.
-8. **User sovereignty** - outside analysis is a recommendation, not a decision. Present it. The user decides.
-9. **Search before building** - check what already exists before inventing a custom approach.
-10. **Leave an artifact** - produce a report the user can refer to later, and persist it to disk when a sensible project path exists.
+1. **Push back first** — do not accept the framing just because the user proposed it.
+2. **Evidence over opinion** — if the codebase, docs, or data can answer something, check before asking. Every question should carry evidence when available: file paths, numbers, existing patterns. "I found X that contradicts your plan" hits harder than "have you considered X?"
+3. **Force choices, not acknowledgments** — every question must present a concrete alternative alongside the concern. The user picks between their approach and the alternative. If the user just says "good point" without changing anything, that is not a resolution — ask what specifically changes in the plan.
+4. **Narrow vague answers** — if the user gives a partial answer, acknowledge the strong part and drill deeper on the weak part. If they say "we'll handle it later," ask: is there a ticket, a timeline, or is this "later" that means "never"? Do not move to the next dimension until the current question has a concrete resolution or is explicitly marked unresolved.
+5. **One cluster at a time** — never bundle unrelated questions. Batch tightly coupled ones (max 3) when they share the same dimension and premise.
+6. **Score on defense quality** — a strong defense with evidence earns points. A vague answer does not. "I don't know" is honest and acceptable (mark unresolved, provide a default). Hand-waving is not.
+7. **User sovereignty** — the user has context you do not: domain knowledge, business timing, taste. Pressure-test the plan, do not seize control. If a subagent or outside analysis recommends a change, present it as a recommendation. Agreement is signal, not proof.
+8. **Leave an artifact** — produce a report the user can refer to later. Persist to disk when a sensible project path exists.
 
-## Review Sequence
+## Subagents
 
-Run the skill in this order:
+Three uses, all optional. If the host does not support them, the main agent handles everything directly.
 
-1. Read the plan, PRD, issue, code, or docs in context.
-2. Run the **Premise Challenge** before the normal dimensions.
-3. Identify the weakest dimensions and order the review weakest-first.
-4. Ask one decision cluster at a time, drilling deeper only on the branches that look weak.
-5. Re-score after each dimension.
-6. Produce a final verdict and stress-test report.
-7. Save the report to disk if you can determine a reasonable project location.
+**Pre-scan** (before grilling): Launch 1 background subagent to gather ammunition while the main agent reads the plan. The subagent searches for: existing code that overlaps with the plan, assumptions that contradict the codebase, and simpler alternatives already in the repo. Its brief feeds into the initial assessment.
+
+**During grilling**: Prepare evidence for the next dimension while the user answers the current question. Do not use subagents for scoring, user questions, or the blocking decision.
+
+**Outside voice** (after verdict): Launch 1 subagent with fresh context. Give it the plan, a summary of the grill (questions asked, defenses given, unresolved items), and one instruction: "What did this review miss? What question should have been asked but wasn't?" Present findings. The user decides what to act on.
 
 ## Search Before Building
 
-Before challenging a plan that depends on unfamiliar patterns, infrastructure, or runtime capabilities, search first.
+Before challenging a plan, check what already exists:
 
-Use three layers:
+- **Layer 1 (tried and true)**: built-ins, standard patterns, battle-tested approaches
+- **Layer 2 (new and popular)**: current best practices, ecosystem trends — scrutinize, don't trust blindly
+- **Layer 3 (first principles)**: reason from the actual problem
 
-- **Layer 1: Tried and true** - built-ins, standard patterns, and battle-tested approaches
-- **Layer 2: New and popular** - current best practices and ecosystem trends
-- **Layer 3: First principles** - reasoning from the actual problem in front of you
+Do not propose a custom solution until you have checked whether the runtime, framework, or repo already solves it. If first-principles reasoning contradicts conventional wisdom and the reasoning is strong, name it: `Eureka: the usual approach is wrong here because ...`
 
-Rules:
+## Review Flow
 
-- do not propose a custom solution until you have checked whether the runtime, framework, or repo already solves it
-- do not treat search results or current trends as truth; they are inputs to reasoning
-- prize clear first-principles disagreement when it is well-supported
+### Step 0: Pre-scan
 
-If you find a strong reason the conventional approach is wrong, name it explicitly:
+Before presenting anything to the user, gather context:
 
-`Eureka: the usual approach is wrong here because ...`
+1. Read the plan, PRD, issue, or docs the user pointed to.
+2. Read nearby docs, specs, and constraints in the repo.
+3. Search for existing code that overlaps with what the plan proposes.
+4. Check stated assumptions against what the code or docs actually show.
+5. Note concrete alternatives found in the codebase or ecosystem.
 
-## Background Subagents
+If there is no codebase (pure idea, early-stage plan): note it and shift weight toward Assumptions and Feasibility dimensions. The absence of code to verify against is itself a risk factor.
 
-If the host supports background subagents, use them to prepare evidence for the next batch while the main review continues.
+If a background subagent is available, delegate steps 3-5 to it while doing steps 1-2 yourself.
 
-Rules:
+### Step 1: Initial Assessment
 
-- use them for code/doc exploration, evidence gathering, and prep for the next branch
-- do not use them for user questions, final recommendations, scoring, or the blocking decision in front of you
-- the main agent owns the live conversation, scoring, and verdict
-- subagents are prep workers, not decision makers
-- only spawn for the **next** dimension or branch, not the current blocking question
-- prefer 1-2 small background explorers over a large swarm
-- if a subagent finds evidence that changes the current recommendation, the main agent integrates it in the next turn
-
-## Step 0: Initial Assessment
-
-Read the relevant context first:
-
-- the user's plan or design
-- nearby docs or specs
-- existing code that already solves part of the problem
-- constraints already stated elsewhere in the repo
-
-Then present a short assessment:
+Present a short assessment including pre-scan findings:
 
 ```text
 --- Stress-Test Assessment ---
@@ -89,41 +70,33 @@ Weakest areas: premise, feasibility, edge cases
 Estimated questions: 8-14
 Estimated time: 10-20 min
 
-Review order:
-[###...] Premise Challenge
-[##....] Assumptions
-[##....] Feasibility
-[#.....] Edge Cases
-[#.....] Security/Risk
-[#.....] Maintainability
-[#.....] Scope
+Pre-scan findings:
+- [what the pre-scan found: overlap, broken assumptions, alternatives]
+- [or: "No codebase context — heavier weight on assumptions and feasibility"]
+
+Review order (weakest first):
+  Premise Challenge
+  Assumptions
+  Feasibility
+  Edge Cases
+  Security/Risk
+  Maintainability
+  Scope
 
 Commands: done | skip | back | I don't know
 ```
 
-Do not pretend the score is precise. It is a calibrated estimate, not a measurement.
+The score is a calibrated estimate, not a measurement.
 
-## Step 1: Premise Challenge
+### Step 2: Premise Challenge
 
-This step is mandatory. Before debating implementation details, challenge whether the plan itself is the right move.
+Mandatory. Before debating implementation, challenge whether the plan itself is the right move.
 
-Check these first:
-
-1. **Problem framing**
-   Is this solving the real problem, or just the user's current idea of the solution?
-2. **Do-nothing baseline**
-   What happens if nothing is built? Real pain, or hypothetical pain?
-3. **Smaller wedge**
-   What is the smallest version that proves the idea with real usage?
-4. **Reuse vs rebuild**
-   What already exists in the codebase, workflow, or product that could be leveraged?
-5. **Alternatives**
-   Produce at least 2 implementation approaches:
-   - one minimal path
-   - one stronger long-term path
-   - a third path if there is a genuinely different tradeoff
-
-Use this structure:
+1. **Problem framing** — Is this solving the real problem, or just the user's current idea of the solution?
+2. **Do-nothing baseline** — What happens if nothing is built? Real pain, or hypothetical?
+3. **Smaller wedge** — What is the smallest version that proves the idea with real usage?
+4. **Reuse vs rebuild** — What already exists that could be leveraged? (Use pre-scan findings.)
+5. **Alternatives** — At least 2 approaches:
 
 ```text
 APPROACH A: Minimal path
@@ -145,219 +118,32 @@ Reuses: ...
 RECOMMENDATION: Choose [X] because ...
 ```
 
-If the current plan is not the best path, say so directly and make the user defend it.
-Where useful, label each approach as tried-and-true, new-and-popular, or first-principles.
+If the current plan is not the best path, say so directly and make the user defend it. Where useful, label each approach as tried-and-true, new-and-popular, or first-principles.
 
-## User Sovereignty
+### Step 3: Dimension Grilling
 
-Rules:
+Run remaining dimensions weakest-first. For each:
 
-- the user has context you do not: domain knowledge, business relationships, strategic timing, and taste
-- pressure-test the plan, do not seize control of it
-- never ask the user something that is obvious from the repo or context
-- never spend a user turn on a routine implementation detail unless it materially changes the recommendation
-- if the answer can be inferred with reasonable confidence, infer it and keep moving
-- if an outside model or background subagent recommends a change, present it as a recommendation
-- if you and another model agree on a change, explain why you both recommend it, state what context may be missing, and ask
-- never say "the outside voice is right" and act without approval
-
-Use this wording:
-
-`The outside voice recommends X. Do you want to proceed?`
-
-Agreement is signal, not proof.
-
-## Ask-User Format
-
-For every meaningful ask-user turn, use this shape.
-
-Only ask when the answer is both:
-
-- not obvious from code, docs, or prior context
-- important enough to change the recommendation, score, or next branch
-
-1. **Re-ground**
-   State the project, the current plan under review, and the exact decision being challenged.
-2. **Concern**
-   Explain the weakness in plain English. No jargon unless the user already introduced it.
-3. **Recommendation**
-   Use this format:
-   `RECOMMENDATION: Choose [X] because [one-line reason]`
-4. **Impact**
-   State the consequence of getting this wrong in one sentence.
-5. **Options**
-   Offer a small set of options, usually:
-   - defend the current choice
-   - accept the recommendation
-   - propose a modified approach
-   - `I don't know`
-   - `skip`
-   - `done`
-   - `back`
-
-Also include:
-
-- `Concern:` `high`, `medium`, or `low`
-- `Confidence:` `high`, `medium`, or `low`
-
-If the host has no ask-user tool, present the same structure in chat and wait.
-
-If the recommendation depends on outside analysis, say:
-
-`The outside voice recommends [X]. Do you want to proceed?`
-
-## Batching Rules
-
-Default to a **decision cluster**, not an isolated question.
-
-If background subagents are available, use them to prepare evidence for the next cluster while the user answers the current one.
-
-Use a batched ask-user turn when all of the following are true:
-
-- the questions are about the same dimension
-- they share the same underlying premise
-- the user can answer them together without ambiguity
-- none of them is a standalone high-severity blocker that deserves its own spotlight
-
-Example:
-
-- good: "What is the real failure mode, how often does it happen, and what evidence do we have?"
-- bad: "How should auth work, do we need Redis, and what should the UX be?"
-
-Batching limits:
-
-- maximum 3 tightly related questions in one turn
-- maximum 1 recommendation per batch
-- if the user gives a vague answer, break the weakest branch back into a single follow-up question
-- if a high-severity concern appears, isolate it in its own turn
-
-Speed rule:
-
-- prefer batching during premise challenge, assumptions gathering, and low-to-medium severity probing
-- prefer single-question drilling for high-severity risks, vague answers, or controversial decisions
-- if a background subagent can tee up the next batch, keep the live turn short and use its findings immediately after the user replies
-- if the next question is obvious, answer it yourself and move to the next non-obvious branch instead of asking it
-
-## Scoring Rubric
-
-Track readiness on a 100-point scale. Re-score after every dimension.
-
-### Dimension weights
-
-- Premise Challenge: 20
-- Assumptions: 20
-- Feasibility: 20
-- Edge Cases: 15
-- Security/Risk: 10
-- Maintainability: 10
-- Scope: 5
-
-### Severity adjustments
-
-Apply these after the dimension scores:
-
-- unresolved high-severity issue: `-10`
-- unresolved medium-severity issue: `-5`
-- unresolved low-severity issue: `-2`
-- strong defense of a previously risky point: `+2` max per issue, do not exceed the dimension cap
-
-### Calibration
-
-- `90-100` Ready. Clear plan, low ambiguity, no major unresolved risks.
-- `75-89` Mostly ready. Some risk remains, but the build can start deliberately.
-- `60-74` Risky. Important gaps remain. Expect churn or rework.
-- `<60` Not ready. The plan is still under-specified or poorly framed.
-
-Do not inflate the score to be polite.
-
-## Grilling Dimensions
-
-Run the remaining dimensions weakest-first, not in a fixed order.
-
-### Assumptions
-
-Probe for:
-
-- hidden business or user assumptions
-- unstated invariants
-- ownership assumptions between systems
-- success criteria that were never defined
-- dependencies on perfect data, timing, or user behavior
-
-### Feasibility
-
-Probe for:
-
-- missing technical prerequisites
-- unrealistic effort or sequencing
-- external dependencies or vendor limits
-- migration complexity
-- operational burden
-- places where the plan ignores existing code and rebuilds from scratch
-
-### Edge Cases
-
-Probe for:
-
-- empty and partial states
-- retries, timeouts, and slow paths
-- concurrent edits or duplicate actions
-- auth/session drift
-- rollback and recovery paths
-- unusual but realistic user behavior
-
-### Security/Risk
-
-Probe for:
-
-- auth and authorization gaps
-- exposure of sensitive data
-- abuse paths and misuse
-- blast radius of failures
-- missing monitoring or rollback strategy
-
-### Maintainability
-
-Probe for:
-
-- unclear ownership boundaries
-- poor testability
-- too many moving parts
-- abstractions that exist before they are needed
-- likely pain in 3-6 months
-
-### Scope
-
-Probe for:
-
-- plan size vs learning value
-- unnecessary complexity
-- work that should be deferred
-- YAGNI violations
-- whether the "minimal wedge" is actually minimal
-
-## Question Loop
-
-For each dimension:
-
-1. Announce the dimension and the current score.
-2. Ask the highest-leverage decision cluster first. Use up to 3 tightly related questions if batching is faster and clearer.
+1. Announce the dimension and current score.
+2. Ask the highest-leverage question first (batch up to 3 if tightly related).
 3. Branch on the answer:
-   - strong defense -> mark as `well-defended`, move on
-   - partial answer -> narrow the weakest branch and ask a follow-up
-   - vague answer -> split the weakest branch into a single focused follow-up, do not switch topics
-   - `I don't know` -> mark unresolved, provide default recommendation, continue
-4. After the dimension, summarize:
+   - **Strong defense with evidence** → mark well-defended, move on
+   - **Partial answer** → acknowledge the strong part, drill deeper on the weak part
+   - **Vague answer** → do not accept. Rephrase more narrowly. Do not switch topics.
+   - **"We'll handle it later"** → ask for the concrete plan: ticket? timeline? owner? If none exist, mark unresolved.
+   - **"I don't know"** → mark unresolved, provide your default recommendation, apply score penalty, continue
+   - **"Good point" with no plan change** → not a resolution. Ask: "What specifically changes in the plan?"
+4. After the dimension:
 
 ```text
-Dimension complete: Feasibility
-Score: 62 -> 71
-Issues found: 1 high, 2 medium
+Dimension: Feasibility
+Score: 62 → 71
+Issues: 1 high, 2 medium
 Unresolved: 1
 Next: Edge Cases
 ```
 
-If the user tries to exit early with a score below 60, warn clearly:
+If the user tries to exit early with score below 60:
 
 ```text
 Warning: readiness is below 60/100.
@@ -365,29 +151,143 @@ This plan is still likely to cause avoidable rework.
 Stop anyway?
 ```
 
-## Report Artifact
+### Step 4: Outside Voice (optional)
 
-When the review ends, always produce a final report in chat.
+After all dimensions are scored, if the host supports subagents:
 
-If there is a sensible project location, persist it to disk too.
+> "Want an outside voice? A fresh reviewer can look for what this grill missed. Takes about a minute."
 
-### Preferred save location
+If yes: launch a subagent as described in the Subagents section. Present its findings under an "Outside Voice" header. The user decides what to act on.
 
-Choose the first reasonable match:
+If no, or if subagents are unavailable: skip and proceed to the report.
 
-1. an existing plan/spec/docs directory already used by the repo
+### Step 5: Report
+
+Produce the final report in chat. Persist to disk if possible (see Report section below).
+
+## Grilling Dimensions
+
+### Assumptions
+
+- Hidden business or user assumptions
+- Unstated invariants
+- Ownership assumptions between systems
+- Success criteria never defined
+- Dependencies on perfect data, timing, or user behavior
+
+### Feasibility
+
+- Missing technical prerequisites
+- Unrealistic effort or sequencing
+- External dependencies or vendor limits
+- Migration complexity
+- Operational burden
+- Places where the plan ignores existing code and rebuilds from scratch
+
+### Edge Cases
+
+- Empty and partial states
+- Retries, timeouts, slow paths
+- Concurrent edits or duplicate actions
+- Auth/session drift
+- Rollback and recovery paths
+- Unusual but realistic user behavior
+
+### Security/Risk
+
+- Auth and authorization gaps
+- Exposure of sensitive data
+- Abuse paths and misuse
+- Blast radius of failures
+- Missing monitoring or rollback strategy
+
+### Maintainability
+
+- Unclear ownership boundaries
+- Poor testability
+- Too many moving parts
+- Premature abstractions
+- Likely pain in 3-6 months
+
+### Scope
+
+- Plan size vs learning value
+- Unnecessary complexity
+- Work that should be deferred
+- YAGNI violations
+- Whether the "minimal wedge" is actually minimal
+
+## Question Format
+
+For every question, use this structure. Only ask when the answer is both not obvious from context and important enough to change the recommendation or score.
+
+1. **Re-ground**: The project, the plan, the exact decision being challenged. One sentence.
+2. **Concern**: The weakness in plain English. Include evidence from the pre-scan when available.
+3. **Recommendation**: `RECOMMENDATION: Choose [X] because [one-line reason]`
+4. **Impact**: The consequence of getting this wrong. One sentence.
+5. **Options**: A small set — typically:
+   - Defend the current choice (explain why the alternative is wrong)
+   - Accept the recommendation
+   - Propose a modified approach
+   - `I don't know` / `skip` / `done` / `back`
+
+Include: `Concern:` high/medium/low and `Confidence:` high/medium/low.
+
+Use the host's ask-user tool when available. If not, present the same structure in chat and wait.
+
+### Batching
+
+Batch questions (max 3) when they share the same dimension and premise. Prefer batching for premise challenge and low-medium severity probing. Prefer single questions for high-severity risks, vague answers, or controversial decisions.
+
+If a background subagent can prepare evidence for the next batch, keep the current turn short and use its findings in the next turn.
+
+## Scoring Rubric
+
+Track readiness on a 100-point scale. Re-score after every dimension.
+
+### Dimension weights
+
+| Dimension | Weight |
+|-----------|--------|
+| Premise Challenge | 20 |
+| Assumptions | 20 |
+| Feasibility | 20 |
+| Edge Cases | 15 |
+| Security/Risk | 10 |
+| Maintainability | 10 |
+| Scope | 5 |
+
+### Adjustments
+
+- Unresolved high-severity: -10
+- Unresolved medium-severity: -5
+- Unresolved low-severity: -2
+- Strong defense of a previously risky point: +2 (max per issue, cannot exceed dimension cap)
+
+### Calibration
+
+- **90-100**: Ready. Clear plan, low ambiguity, no major unresolved risks.
+- **75-89**: Mostly ready. Some risk, but the build can start deliberately.
+- **60-74**: Risky. Important gaps remain. Expect churn or rework.
+- **<60**: Not ready. Under-specified or poorly framed.
+
+Do not inflate the score to be polite.
+
+## Report
+
+### Save location
+
+First reasonable match:
+
+1. Existing plan/spec/docs directory in the repo
 2. `docs/grill-me/`
 3. `.ai/grill-me/`
 
-If none of those are appropriate or writable, skip persistence and say so.
+If none are appropriate, skip persistence and say so.
 
-Suggested filename:
+Filename: `YYYY-MM-DD-<topic>-stress-test.md`
 
-`YYYY-MM-DD-<topic>-stress-test.md`
-
-### Report template
-
-Use this structure:
+### Template
 
 ```markdown
 # Stress-Test Report: <topic>
@@ -416,25 +316,21 @@ Use this structure:
 ## Well-Defended
 - [x] ...
 
+## Outside Voice Findings
+- ... (if run)
+
 ## Recommended Next Step
 - ...
 ```
 
-## Final Verdict Rules
+## Verdict Rules
 
-- `READY`
-  Score is 75+ and there are no unresolved high-severity issues.
-- `READY_WITH_RISKS`
-  Score is 60-74, or score is 75+ with unresolved medium issues worth tracking.
-- `NOT_READY`
-  Score is below 60, or any unresolved high-severity issue blocks safe implementation.
+- **READY**: Score 75+ with no unresolved high-severity issues.
+- **READY_WITH_RISKS**: Score 60-74, or 75+ with unresolved medium issues.
+- **NOT_READY**: Score below 60, or any unresolved high-severity blocker.
 
 ## Style
 
-- Direct, skeptical, concrete
-- Push back on weak framing
-- No passive consultant tone
-- Name the flaw, why it matters, and what to do next
-- Prefer "I don't buy this yet because..." over soft hedging when the plan is weak
+Direct, skeptical, concrete. Push back on weak framing. No passive consultant tone. Name the flaw, why it matters, and what to do next. Prefer "I don't buy this yet because..." over soft hedging when the plan is weak.
 
 The user should feel challenged, not stonewalled. Pressure-test the idea, then leave them with a sharper plan.
