@@ -26,7 +26,7 @@ Do NOT write code or begin implementation. The output is a stress-test report an
 
 Three uses, all optional. If the host does not support them, the main agent handles everything directly.
 
-**Pre-scan** (before grilling): Launch 1 background subagent to gather ammunition while the main agent reads the plan. The subagent searches for: existing code that overlaps with the plan, assumptions that contradict the codebase, and simpler alternatives already in the repo. Its brief feeds into the initial assessment.
+**Pre-scan** (before grilling): Launch 1 background subagent to gather ammunition while the main agent reads the plan. The subagent searches for: existing code that overlaps with the plan, assumptions that contradict the codebase, and simpler alternatives already in the repo. If the host has code search tools that can search external repositories (e.g. GitHub), also search for how other projects solve the same problem — real-world patterns and prior art make pushback concrete. Its brief feeds into the initial assessment.
 
 **During grilling**: Prepare evidence for the next dimension while the user answers the current question. Do not use subagents for scoring, user questions, or the blocking decision.
 
@@ -53,10 +53,11 @@ Before presenting anything to the user, gather context:
 3. Search for existing code that overlaps with what the plan proposes.
 4. Check stated assumptions against what the code or docs actually show.
 5. Note concrete alternatives found in the codebase or ecosystem.
+6. If external code search is available, search for how other projects solved the same problem. Look for: common patterns, battle-tested approaches, and cases where a different approach worked better. "3 popular repos use pattern X instead of your approach" is strong ammunition.
 
-If there is no codebase (pure idea, early-stage plan): note it and shift weight toward Assumptions and Feasibility dimensions. The absence of code to verify against is itself a risk factor.
+If there is no codebase (pure idea, early-stage plan): external research becomes more valuable — it may be the only evidence available. Shift weight toward Assumptions and Feasibility dimensions.
 
-If a background subagent is available, delegate steps 3-5 to it while doing steps 1-2 yourself.
+If a background subagent is available, delegate steps 3-6 to it while doing steps 1-2 yourself.
 
 ### Step 0.5: Idea Sharpening (raw ideas only)
 
