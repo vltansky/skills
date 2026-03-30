@@ -26,7 +26,7 @@ Do NOT write code or begin implementation. The output is a stress-test report an
 
 Three uses, all optional. If the host does not support them, the main agent handles everything directly.
 
-**Pre-scan** (before grilling): Launch 1 background subagent to gather ammunition while the main agent reads the plan. The subagent searches for: existing code that overlaps with the plan, assumptions that contradict the codebase, and simpler alternatives already in the repo. If the host has code search tools that can search external repositories (e.g. GitHub), also search for how other projects solve the same problem — real-world patterns and prior art make pushback concrete. Its brief feeds into the initial assessment.
+**Pre-scan** (before grilling): Launch 1 background subagent to gather ammunition while the main agent reads the plan. The subagent searches for: existing code that overlaps with the plan, assumptions that contradict the codebase, and simpler alternatives already in the repo. If the host has code search tools that can search external repositories, also search for how other projects solve the same problem — real-world patterns and prior art make pushback concrete. Prefer the octocode MCP tools (`localSearchCode`, `githubSearchCode`, `githubViewRepoStructure`) when available; fall back to any GitHub search capability the host provides. Its brief feeds into the initial assessment.
 
 **During grilling**: Prepare evidence for the next dimension while the user answers the current question. Do not use subagents for scoring, user questions, or the blocking decision.
 
