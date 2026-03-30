@@ -7,7 +7,7 @@ description: "Systematically QA test a web application and fix bugs found. Runs 
 
 You are a QA engineer AND a bug-fix engineer. Test web applications like a real user — click everything, fill every form, check every state. When you find bugs, fix them in source code with atomic commits, then re-verify. Produce a structured report with before/after evidence.
 
-Browser: always use `dev-browser`. See `references/browser-api.md` for snippets.
+Browser: always use `agent-browser`. See `references/browser-api.md` for snippets.
 
 ## Setup
 
@@ -38,13 +38,13 @@ git status --porcelain
 If non-empty, STOP — ask user: commit/stash/abort before QA adds its own fix commits.
 Format: A) Commit my changes B) Stash C) Abort. RECOMMENDATION: A.
 
-**Verify dev-browser:**
+**Verify agent-browser:**
 
 ```bash
-which dev-browser && dev-browser --version 2>/dev/null || echo "NEEDS_INSTALL"
+which agent-browser && agent-browser --version 2>/dev/null || echo "NEEDS_INSTALL"
 ```
 
-If `NEEDS_INSTALL`: tell user to install dev-browser and stop.
+If `NEEDS_INSTALL`: tell user to install agent-browser and stop.
 
 **Create output directories:**
 
@@ -70,7 +70,7 @@ Primary mode for developers verifying their work.
 2. Map changed files → affected pages/routes (controllers → URLs, views/components → pages, CSS → pages that include them)
 3. Detect running app:
    ```bash
-   dev-browser <<'EOF'
+   agent-browser <<'EOF'
    const page = await browser.getPage("qa-probe");
    for (const port of [3000, 4000, 8080, 5173, 5000]) {
      try {
@@ -113,7 +113,7 @@ Start timer. Create report file from template. Page name convention: use `"qa-ma
 ## Phase 2: Authenticate (if needed)
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.goto("https://yourapp.com/login");
 const snap = await page.snapshotForAI();
@@ -123,7 +123,7 @@ EOF
 
 Then fill form:
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.fill('input[type="email"]', 'user@example.com');
 await page.fill('input[type="password"]', '[REDACTED]');
@@ -142,7 +142,7 @@ If CAPTCHA: tell user to complete it and tell you to continue.
 ## Phase 3: Orient
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.goto("TARGET_URL");
 
@@ -182,7 +182,7 @@ Read the screenshot file so the user can see it.
 For each page, visit and check:
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.goto("PAGE_URL");
 const snap = await page.snapshotForAI();
@@ -204,7 +204,7 @@ After each page, read the screenshot inline. Per-page checklist (see `references
 6. Console errors — check `window.__qaErrors` after interactions
 7. Responsiveness — check mobile viewport if relevant:
    ```bash
-   dev-browser --browser mobile <<'EOF'
+   agent-browser --browser mobile <<'EOF'
    const page = await browser.getPage("qa-mobile");
    await page.goto("PAGE_URL");
    const buf = await page.screenshot();
@@ -225,14 +225,14 @@ Document each issue **immediately when found** — don't batch.
 **Interactive bugs** (broken flows, dead buttons, form failures):
 ```bash
 # Before
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const buf = await page.screenshot();
 console.log(await saveScreenshot(buf, "issue-001-before.png"));
 EOF
 
 # Perform the action
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.click('button#submit');
 const buf = await page.screenshot();
@@ -303,7 +303,7 @@ One commit per fix. Never bundle multiple fixes.
 
 ### 8d. Re-test
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.goto("AFFECTED_URL");
 const buf = await page.screenshot();

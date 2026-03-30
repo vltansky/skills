@@ -7,7 +7,7 @@ description: "Designer's eye visual audit of a live site — finds typography is
 
 You are a senior product designer AND a frontend engineer. Review live sites with exacting visual standards — then fix what you find. You have strong opinions about typography, spacing, and visual hierarchy, and zero tolerance for generic or AI-generated-looking interfaces.
 
-Browser: always use `dev-browser`. See `references/browser-api.md` for snippets.
+Browser: always use `agent-browser`. See `references/browser-api.md` for snippets.
 
 ## Setup
 
@@ -31,9 +31,9 @@ git status --porcelain
 ```
 If non-empty: STOP — ask user commit/stash/abort. RECOMMENDATION: A (commit).
 
-**Verify dev-browser:**
+**Verify agent-browser:**
 ```bash
-which dev-browser || echo "NEEDS_INSTALL"
+which agent-browser || echo "NEEDS_INSTALL"
 ```
 
 **Create output directory:**
@@ -69,7 +69,7 @@ Homepage + 2 key pages. First Impression + Design System Extraction + abbreviate
 Navigate to the target URL, screenshot, and form a gut reaction before analyzing anything.
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("design-main");
 await page.goto("TARGET_URL");
 const buf = await page.screenshot();
@@ -93,7 +93,7 @@ Be opinionated. A designer doesn't hedge.
 Extract the actual design system the site uses:
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("design-main");
 
 const fonts = await page.evaluate(() =>
@@ -144,7 +144,7 @@ Offer: *"Want me to save this as your DESIGN.md?"*
 For each page in scope:
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("design-main");
 await page.goto("PAGE_URL");
 
@@ -169,7 +169,7 @@ Read every screenshot inline. For responsive screenshots:
 
 ```bash
 # Mobile
-dev-browser --browser mobile <<'EOF'
+agent-browser --browser mobile <<'EOF'
 const page = await browser.getPage("design-mobile");
 await page.goto("PAGE_URL");
 const buf = await page.screenshot();
@@ -272,7 +272,7 @@ Apply at each page. Each finding: impact (high/medium/polish) + category.
 Walk 2-3 key user flows and evaluate the *feel*:
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("design-main");
 // Establish snapshot baseline
 const before = await page.snapshotForAI({ track: "flow-1" });
@@ -394,7 +394,7 @@ One commit per fix. Never bundle.
 
 ### 8d. Re-test
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("design-main");
 await page.goto("AFFECTED_URL");
 const buf = await page.screenshot();

@@ -1,6 +1,6 @@
-# dev-browser API Reference for QA
+# agent-browser API Reference for QA
 
-All browser automation uses `dev-browser`. Scripts run in a sandboxed QuickJS runtime — no `require`, no `fetch`, no `process`. Use the `browser` global.
+All browser automation uses `agent-browser`. Scripts run in a sandboxed QuickJS runtime — no `require`, no `fetch`, no `process`. Use the `browser` global.
 
 ## Page Names
 
@@ -12,7 +12,7 @@ Use stable page names so scripts resume after failures:
 ## Connect to user's real browser (preferred when logged in)
 
 ```bash
-dev-browser --connect <<'EOF'
+agent-browser --connect <<'EOF'
 const page = await browser.getPage("qa-main");
 console.log(JSON.stringify({ url: page.url(), title: await page.title() }));
 EOF
@@ -23,7 +23,7 @@ Use `--connect` when the user is already authenticated in their browser. Skips l
 ## Navigate + Snapshot
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.goto("https://example.com");
 const snap = await page.snapshotForAI();
@@ -37,7 +37,7 @@ EOF
 ## Inject Error Capture (run once after first goto)
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.evaluate(() => {
   if (window.__qaErrors) return;
@@ -52,7 +52,7 @@ EOF
 ## Check Console Errors
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const errors = await page.evaluate(() => window.__qaErrors || []);
 console.log(JSON.stringify({ errors, count: errors.length }));
@@ -62,7 +62,7 @@ EOF
 ## Get All Links
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const links = await page.$$eval('a[href]', els =>
   els.map(e => ({ text: e.textContent.trim().slice(0, 60), href: e.href }))
@@ -74,7 +74,7 @@ EOF
 ## Fill and Submit Form
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 await page.fill('input[type="email"]', 'test@example.com');
 await page.fill('input[type="password"]', '[REDACTED]');
@@ -87,7 +87,7 @@ EOF
 ## Find Elements by Role (from snapshot)
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const snap = await page.snapshotForAI();
 // Read snap.full to find roles and accessible names, then:
@@ -99,7 +99,7 @@ EOF
 ## Track DOM Changes (diff mode)
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 // First call with track ID establishes baseline
 const before = await page.snapshotForAI({ track: "step-1" });
@@ -116,7 +116,7 @@ EOF
 Use a separate browser instance with `--browser mobile`:
 
 ```bash
-dev-browser --browser mobile <<'EOF'
+agent-browser --browser mobile <<'EOF'
 const page = await browser.getPage("qa-mobile");
 await page.goto("https://example.com");
 // Browser starts headless at mobile dimensions
@@ -128,7 +128,7 @@ EOF
 ## Detect Port
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-probe");
 for (const port of [3000, 4000, 5173, 8080, 5000]) {
   try {
@@ -143,7 +143,7 @@ EOF
 ## Run JavaScript in Page Context
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const result = await page.evaluate(() => {
   return {
@@ -159,7 +159,7 @@ EOF
 ## API / Fetch Testing
 
 ```bash
-dev-browser <<'EOF'
+agent-browser <<'EOF'
 const page = await browser.getPage("qa-main");
 const result = await page.evaluate(async () => {
   const r = await fetch('/api/health');
