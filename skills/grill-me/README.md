@@ -37,6 +37,8 @@ Trigger phrases:
 - "Poke holes in this approach"
 - "Challenge my assumptions before I build this"
 - "Push back on this plan"
+- "I have an idea — grill me on it"
+- "Is this worth building?"
 
 ### Example
 
@@ -47,12 +49,13 @@ Trigger phrases:
 Expected behavior:
 
 1. Pre-scans the codebase for overlap, broken assumptions, and alternatives
-2. Presents initial assessment with pre-scan findings
-3. Challenges the premise before debating implementation details
-4. Produces at least 2 approaches with a recommendation
-5. Forces concrete defenses — drills into vague answers instead of moving on
-6. Ends with a scored stress-test report and readiness verdict
-7. Optionally runs an outside voice for blind-spot detection
+2. For raw ideas: sharpens the idea with 3-4 questions before grilling
+3. Presents initial assessment with pre-scan findings
+4. Challenges the premise before debating implementation details
+5. Produces at least 2 approaches with a recommendation
+6. Forces concrete defenses — drills into vague answers instead of moving on
+7. Ends with a scored stress-test report and readiness verdict
+8. Optionally runs an outside voice for blind-spot detection
 
 ## File Layout
 

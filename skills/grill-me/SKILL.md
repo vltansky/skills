@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: Structured adversarial review that pushes back on a plan, challenges the premise, compares alternatives, and stress-tests the design until the main risks are explicit. Use when the user asks to "grill me", stress-test a plan, poke holes in an approach, challenge assumptions, or pressure-test a design before implementation.
+description: Structured adversarial review that pushes back on a plan, challenges the premise, compares alternatives, and stress-tests the design until the main risks are explicit. Use when the user asks to "grill me", stress-test a plan, poke holes in an approach, challenge assumptions, pressure-test a design, or validate an early-stage idea before building ("I have an idea", "is this worth building", "grill me on this idea").
 ---
 
 # Grill Me
@@ -57,6 +57,21 @@ Before presenting anything to the user, gather context:
 If there is no codebase (pure idea, early-stage plan): note it and shift weight toward Assumptions and Feasibility dimensions. The absence of code to verify against is itself a risk factor.
 
 If a background subagent is available, delegate steps 3-5 to it while doing steps 1-2 yourself.
+
+### Step 0.5: Idea Sharpening (raw ideas only)
+
+If the input is a raw idea rather than a formed plan — "I want to build X", "is this worth building", vague concept with no spec, doc, or structured approach — run this step to make the idea grillable. Skip if the user provided a plan, PRD, design doc, or structured proposal.
+
+Ask these one at a time. Use the host's ask-user tool when available. Skip any question the user's initial prompt already answered.
+
+1. **What problem does this solve?** Who has this problem today, and what are they doing about it right now — even badly?
+2. **What's the smallest version?** What's the narrowest thing you could build that proves the idea works with real usage?
+3. **What already exists?** What's the closest thing to this that people already use, and how is yours different?
+4. **What's the strongest evidence someone wants this?** Not "people think it's interesting" — would anyone be upset if it disappeared?
+
+If the user shows impatience ("just grill me", "skip the questions"): ask one more question (the most critical remaining one), then proceed. If they push back a second time, proceed immediately with what you have.
+
+After this step, synthesize the answers into a working problem statement and proceed to the Initial Assessment. The answers feed directly into the Premise Challenge — they are the claims you will now stress-test.
 
 ### Step 1: Initial Assessment
 
