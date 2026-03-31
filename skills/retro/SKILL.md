@@ -83,7 +83,7 @@ git log origin/<default> --since="<window>" --oneline --grep="test(qa):" --grep=
 git log origin/<default> --since="<window>" --format="" --name-only | grep -E '\.(test|spec)\.' | sort -u | wc -l
 
 # 12. Skill usage analytics (if exists)
-cat ~/.gstack/analytics/skill-usage.jsonl 2>/dev/null | tail -200 || true
+cat ~/.context/analytics/skill-usage.jsonl 2>/dev/null | tail -200 || true
 ```
 
 ---
@@ -126,7 +126,7 @@ Include in metrics table:
 | Backlog Health | N open (X P0/P1, Y P2) · Z completed this period |
 ```
 
-**Skill Usage (if `~/.gstack/analytics/skill-usage.jsonl` exists):**
+**Skill Usage (if `~/.context/analytics/skill-usage.jsonl` exists):**
 Filter entries by `ts` within window. Aggregate by skill name. Present as:
 ```
 | Skill Usage | /qa(8) /design-review(3) /retro(2) |

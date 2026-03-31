@@ -17,8 +17,8 @@ Browser: always use `agent-browser`. See `references/browser-api.md` for snippet
 |-----------|---------|---------|
 | Target URL | auto-detect or required | `https://myapp.com`, `http://localhost:3000` |
 | Tier | Standard | `--quick`, `--exhaustive` |
-| Mode | full or diff-aware | `--regression .gstack/qa-reports/baseline.json` |
-| Output dir | `.gstack/qa-reports/` | `Output to /tmp/qa` |
+| Mode | full or diff-aware | `--regression .context/qa-reports/baseline.json` |
+| Output dir | `.context/qa-reports/` | `Output to /tmp/qa` |
 | Scope | Full app | `Focus on the billing page` |
 | Auth | None | `Sign in to user@example.com` |
 
@@ -49,10 +49,10 @@ If `NEEDS_INSTALL`: tell user to install agent-browser and stop.
 **Create output directories:**
 
 ```bash
-mkdir -p .gstack/qa-reports/screenshots
+mkdir -p .context/qa-reports/screenshots
 ```
 
-Copy `references/qa-report-template.md` to `.gstack/qa-reports/qa-report-{domain}-{YYYY-MM-DD}.md`.
+Copy `references/qa-report-template.md` to `.context/qa-reports/qa-report-{domain}-{YYYY-MM-DD}.md`.
 
 ---
 
@@ -102,7 +102,7 @@ Full mode + diff against `baseline.json`. Score delta, fixed vs. new issues.
 ## Phase 1: Initialize
 
 ```bash
-REPORT_DIR=".gstack/qa-reports"
+REPORT_DIR=".context/qa-reports"
 START_TIME=$(date +%s)
 ```
 
@@ -349,7 +349,7 @@ Re-run QA on all affected pages. Compute final health score.
 ## Phase 10: Report
 
 Write report to:
-- **Local:** `.gstack/qa-reports/qa-report-{domain}-{YYYY-MM-DD}.md`
+- **Local:** `.context/qa-reports/qa-report-{domain}-{YYYY-MM-DD}.md`
 
 Per-issue additions beyond template:
 - Fix Status: verified / best-effort / reverted / deferred
@@ -392,7 +392,7 @@ If repo has `TODOS.md`:
 ## Output Structure
 
 ```
-.gstack/qa-reports/
+.context/qa-reports/
 ├── qa-report-{domain}-{YYYY-MM-DD}.md
 ├── screenshots/
 │   ├── initial.png

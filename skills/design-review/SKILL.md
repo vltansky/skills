@@ -38,8 +38,8 @@ which agent-browser || echo "NEEDS_INSTALL"
 
 **Create output directory:**
 ```bash
-mkdir -p .gstack/design-reports/screenshots
-REPORT_DIR=".gstack/design-reports"
+mkdir -p .context/design-reports/screenshots
+REPORT_DIR=".context/design-reports"
 ```
 
 Copy `references/design-report-template.md` to `$REPORT_DIR/design-audit-{domain}-{YYYY-MM-DD}.md`.
@@ -438,7 +438,7 @@ Re-run audit on all affected pages. Compute final design score and AI slop score
 
 ## Phase 10: Report
 
-Write to `.gstack/design-reports/design-audit-{domain}-{YYYY-MM-DD}.md`.
+Write to `.context/design-reports/design-audit-{domain}-{YYYY-MM-DD}.md`.
 
 Per-finding additions:
 - Fix Status: verified / best-effort / reverted / deferred
