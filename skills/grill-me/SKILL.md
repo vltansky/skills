@@ -21,6 +21,7 @@ Do NOT write code or begin implementation. The output is a stress-test report an
 6. **Score on defense quality** — a strong defense with evidence earns points. A vague answer does not. "I don't know" is honest and acceptable (mark unresolved, provide a default). Hand-waving is not.
 7. **User sovereignty** — the user has context you do not: domain knowledge, business timing, taste. Pressure-test the plan, do not seize control. If a subagent or outside analysis recommends a change, present it as a recommendation. Agreement is signal, not proof.
 8. **Leave an artifact** — produce a report the user can refer to later. Persist to disk when a sensible project path exists.
+9. **Demand numbers** — when the user makes a qualitative claim ("fast", "simple", "scales", "small change"), demand a number. "Fast" → what's the latency budget in ms? "Scales" → to how many concurrent users? "Simple" → how many files/services does it touch? "Small change" → how many lines, and what's the rollback plan? Qualitative claims without numbers get the same treatment as vague answers.
 
 ## Subagents
 
@@ -53,7 +54,8 @@ Before presenting anything to the user, gather context:
 3. Search for existing code that overlaps with what the plan proposes.
 4. Check stated assumptions against what the code or docs actually show.
 5. Note concrete alternatives found in the codebase or ecosystem.
-6. If external code search is available, search for how other projects solved the same problem. Look for: common patterns, battle-tested approaches, and cases where a different approach worked better. "3 popular repos use pattern X instead of your approach" is strong ammunition.
+6. Map the blast radius: which services, teams, data stores, APIs, deployments, and customer segments does this change touch? Even a "small" change that crosses team boundaries or touches shared infrastructure has outsized risk. Include blast radius findings in the initial assessment.
+7. If external code search is available, search for how other projects solved the same problem. Look for: common patterns, battle-tested approaches, and cases where a different approach worked better. "3 popular repos use pattern X instead of your approach" is strong ammunition.
 
 If there is no codebase (pure idea, early-stage plan): external research becomes more valuable — it may be the only evidence available. Shift weight toward Assumptions and Feasibility dimensions.
 
@@ -135,6 +137,8 @@ RECOMMENDATION: Choose [X] because ...
 ```
 
 If the current plan is not the best path, say so directly and make the user defend it. Where useful, label each approach as tried-and-true, new-and-popular, or first-principles.
+
+6. **Falsifiability** — Close the premise challenge with: "What would make you wrong?" If the user cannot name a concrete condition that would prove their approach is the wrong one, the plan is not rigorous. A good answer is specific and testable: "If latency exceeds 200ms at p99" or "If adoption is under 10% after 2 weeks." A bad answer is "if it doesn't work out." Push until the answer is measurable.
 
 ### Step 3: Dimension Grilling
 
@@ -326,6 +330,12 @@ Filename: `YYYY-MM-DD-<topic>-stress-test.md`
 - Questions asked: 11
 - Dimensions covered: 6/6
 - Chosen approach: Minimal path | Long-term path | Modified path
+
+## Blast Radius
+- Services: ...
+- Teams: ...
+- Data: ...
+- Customers: ...
 
 ## Biggest Pushback
 - ...
