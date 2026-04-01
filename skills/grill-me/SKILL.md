@@ -181,6 +181,19 @@ If no, or if subagents are unavailable: skip and proceed to the report.
 
 Produce the final report in chat. Persist to disk if possible (see Report section below).
 
+### Step 6: Handoff
+
+After delivering the report, suggest the natural next step based on the verdict:
+
+**READY or READY_WITH_RISKS:**
+
+Offer one of two paths (pick the one that fits, or present both if ambiguous):
+
+- **`/rfc-research`** — when the grill uncovered tradeoffs, competing approaches, or prior art worth formalizing. Fits technical decisions (architecture, library selection, system design) where a documented proposal will outlive this conversation.
+- **Plan mode** — when the approach is settled, risks are known, and the next step is breaking the work into implementation tasks. Suggest entering plan mode to start building.
+
+**NOT_READY:** Do not suggest either. The plan needs rework first — say what needs to change before it is worth formalizing or implementing.
+
 ## Grilling Dimensions
 
 ### Assumptions

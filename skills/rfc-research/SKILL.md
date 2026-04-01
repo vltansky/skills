@@ -244,6 +244,7 @@ After the subagent returns:
 
 1. Save the RFC to `docs/rfcs/NNNN-[slug].md`
 2. Present a summary in the conversation with key findings and the file path
+3. Suggest `/grill-me` to stress-test the proposal before committing to it — the RFC is a plan, and plans benefit from adversarial review
 
 ## Research Quality Gates
 
