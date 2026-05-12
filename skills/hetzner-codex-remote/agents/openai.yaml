@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hetzner Codex Remote"
+  short_description: "Prepare a Hetzner VPS for secure Codex remote SSH access."
+  default_prompt: "Help me set up a Hetzner VPS as a secure Codex remote connection."

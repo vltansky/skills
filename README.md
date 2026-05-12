@@ -54,6 +54,12 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 | [ship-it](skills/ship-it) | Create a GitHub PR with conventional format and AI session context |
 | [fix-pr-comments](skills/fix-pr-comments) | Address PR reviewer feedback — fix, reply on-thread, resolve |
 
+### Operations
+
+| Skill | Description |
+|-------|-------------|
+| [hetzner-codex-remote](skills/hetzner-codex-remote) | Prepare a Hetzner Cloud VPS for secure Codex remote SSH access |
+
 ### Debugging
 
 | Skill | Description |
