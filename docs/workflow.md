@@ -64,7 +64,8 @@ The complete plan-to-ship pipeline using skills from this collection.
 |-------|-------------|
 | [roast-my-agents-md](../skills/roast-my-agents-md) | Review AGENTS.md/CLAUDE.md for bloat + A/B eval proof |
 | [agents-md-evals](../skills/agents-md-evals) | A/B test instruction files to find dead-weight rules |
-| [what-i-did](../skills/what-i-did) | GitHub activity summary across all repos |
+| [daily-standup](../skills/daily-standup) | Daily Slack-ready GitHub activity recap |
+| [weekly-standup](../skills/weekly-standup) | Weekly Slack-ready community skills standup |
 | [retro](../skills/retro) | Weekly retrospective from commit history |
 | [chat-history](../skills/chat-history-skill) | Search previous AI conversations |
 

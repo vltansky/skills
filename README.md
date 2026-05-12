@@ -71,7 +71,8 @@ npx skills add vltansky/skills/skills/roast-my-agents-md -g -y
 |-------|-------------|
 | [roast-my-agents-md](skills/roast-my-agents-md) | Brutally honest AGENTS.md/CLAUDE.md review backed by A/B test evidence |
 | [agents-md-evals](skills/agents-md-evals) | Evaluate and optimize instruction files through controlled A/B testing |
-| [what-i-did](skills/what-i-did) | Summarize your GitHub activity from the last 24 hours across all repos |
+| [daily-standup](skills/daily-standup) | Slack-ready daily standup from GitHub, with optional Slack and Calendar context |
+| [weekly-standup](skills/weekly-standup) | Slack-ready weekly standup for new and updated community skills |
 | [retro](skills/retro) | Weekly engineering retrospective from commit history |
 | [chat-history](skills/chat-history-skill) | Search previous AI chat conversations from Cursor and Claude Code |
 
