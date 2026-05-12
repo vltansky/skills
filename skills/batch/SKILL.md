@@ -53,7 +53,7 @@ For each agent, the prompt must be fully self-contained. Include:
 
 ```
 After you finish implementing the change:
-1. **Simplify** — Invoke /simplify if available; otherwise do a quick self-review of your changes for reuse and quality.
+1. **Self-review** — Check your changes for reuse, quality, and avoidable complexity.
 2. **Run unit tests** — Run the project's test suite (check for package.json scripts, Makefile targets, or common commands like `npm test`, `bun test`, `pytest`, `go test`). If tests fail, fix them.
 3. **Test end-to-end** — Follow the e2e test recipe from the coordinator's prompt (below). If the recipe says to skip e2e for this unit, skip it.
 4. **Commit and push** — Commit all changes with a clear message, push the branch, and create a PR with `gh pr create`. Use a descriptive title. If `gh` is not available or the push fails, note it in your final message.

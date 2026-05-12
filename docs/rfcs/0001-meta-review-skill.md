@@ -120,7 +120,7 @@ type MetaReviewWalkthrough = {
 ## 7. Implementation
 
 1. Create `skills/meta-review/SKILL.md` and `skills/meta-review/README.md`.
-2. Reuse the parallel-pass pattern from `simplify`, but change the passes to understanding-oriented roles:
+2. Reuse the parallel-pass review pattern, but change the passes to understanding-oriented roles:
    - change mapper
    - architecture/design explainer
    - low-confidence detector
@@ -138,10 +138,10 @@ type MetaReviewWalkthrough = {
 - Cons: wrong problem. A normal review skill produces findings; this skill should produce understanding.
 - Why not: it keeps the reviewer stuck at the same bottleneck.
 
-### 8.2 Extend `simplify`
+### 8.2 Extend an existing cleanup skill
 
 - Pros: existing multi-pass structure.
-- Cons: `simplify` is a cleanup/fix workflow, not a reviewer briefing workflow.
+- Cons: cleanup/fix workflows are not reviewer briefing workflows.
 - Why not: the contract would become muddled and the output would drift toward “issues to fix” instead of “how to review this PR.”
 
 ## 9. Risks

@@ -1,6 +1,6 @@
 ---
 name: debug
-description: "Systematic root-cause debugging for any bug — backend, frontend, logic, integration. Hypothesis-driven investigation with evidence collection. Use when the user says 'debug', 'investigate', 'why is this broken', 'root cause', 'trace this bug', 'figure out why', 'this doesn't work', 'unexpected behavior', or when autopilot's guardrails fail repeatedly. For frontend-specific runtime debugging with a log server, use /debug-mode instead."
+description: "Systematic root-cause debugging for any bug — backend, frontend, logic, integration. Hypothesis-driven investigation with evidence collection. Use when the user says 'debug', 'investigate', 'why is this broken', 'root cause', 'trace this bug', 'figure out why', 'this doesn't work', or 'unexpected behavior'. For frontend-specific runtime debugging with a log server, use /debug-mode instead."
 ---
 
 # Debug
@@ -14,7 +14,7 @@ Reproduce → Hypothesize → Investigate → Isolate → Fix → Verify → Pre
 ## When to Use
 
 - Test failures you can't explain by reading the code
-- Guardrail failures during autopilot that resist 2+ fix attempts
+- Guardrail failures that resist 2+ fix attempts
 - "It works locally but fails in CI"
 - Unexpected behavior with no obvious cause
 - Integration bugs between systems
