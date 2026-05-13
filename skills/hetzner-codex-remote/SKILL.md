@@ -7,7 +7,7 @@ description: Prepare a Hetzner Cloud VPS for secure Codex remote SSH access. Use
 
 ## Overview
 
-Set up a Hetzner Cloud server so Codex can use it as a remote SSH connection. Keep the setup secure by default: key-only SSH, no root SSH, a dedicated `codex` user, firewall allowlisting where practical, and a verified `codex` CLI in `PATH`.
+Set up a Hetzner Cloud server so Codex can use it as a remote SSH connection. Keep the setup secure by default: key-only SSH, no root SSH, a dedicated `codex` user, firewall allowlisting where practical, optional Tailscale-only SSH for roaming clients, and a verified `codex` CLI in `PATH`.
 
 Do not copy personal data from examples or prior chats into commands, files, or documentation. Use placeholders for IPs, keys, project IDs, host aliases, and account details.
 
@@ -18,8 +18,9 @@ Do not copy personal data from examples or prior chats into commands, files, or 
 3. Confirm SSH access and the server IP.
 4. Harden SSH and create the `codex` user.
 5. Install coding-agent tooling and Codex CLI.
-6. Verify from a plain non-interactive SSH command.
-7. Tell the user to add the host in Codex: Settings > Connections > Add SSH.
+6. If the user will connect from changing networks, move SSH behind Tailscale.
+7. Verify from a plain non-interactive SSH command.
+8. Tell the user to add the host in Codex: Settings > Connections > Add SSH.
 
 ## If No VPS Exists
 
@@ -57,7 +58,7 @@ Find the user's current public IPv4 for firewall allowlisting:
 curl -4 -s https://ifconfig.me || curl -4 -s https://icanhazip.com
 ```
 
-Warn that an IP allowlist can lock out SSH when the user's public IP changes. If that is unacceptable, keep SSH open to the internet but retain key-only login, no root login, and fail2ban.
+Warn that an IP allowlist can lock out SSH when the user's public IP changes. If the user uses the same client device from different networks, prefer Tailscale-only SSH over chasing public IP allowlists.
 
 ## Harden SSH
 
@@ -145,6 +146,81 @@ Verify:
 ssh <HOST_ALIAS> 'whoami && hostname'
 ```
 
+## Optional: Tailscale-Only SSH
+
+Use this when the same client device needs SSH from different networks, or when the user wants SSH reachable only through their tailnet. Keep the existing public SSH path open until SSH over Tailscale is verified.
+
+Install Tailscale on the remote server:
+
+```bash
+ssh <HOST_ALIAS> 'set -euo pipefail
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo -n systemctl enable --now tailscaled
+tailscale version
+sudo -n tailscale up --hostname=<HOST_ALIAS> --accept-dns=false || true
+sudo -n tailscale status --json | python3 -c "import json,sys; d=json.load(sys.stdin); print({\"BackendState\": d.get(\"BackendState\"), \"AuthURL\": d.get(\"AuthURL\"), \"TailscaleIPs\": (d.get(\"Self\") or {}).get(\"TailscaleIPs\"), \"DNSName\": (d.get(\"Self\") or {}).get(\"DNSName\"), \"HostName\": (d.get(\"Self\") or {}).get(\"HostName\")})"'
+```
+
+If `BackendState` is `NeedsLogin`, open the `AuthURL` in the user's browser and connect the device to the intended tailnet. If browser automation is available and the user asked you to handle it, use the browser to authorize the device. Select the correct tailnet when more than one is offered.
+
+After authorization, collect the Tailscale IP:
+
+```bash
+TAILSCALE_IP="$(ssh <HOST_ALIAS> 'sudo -n tailscale ip -4 | sed -n "1p"')"
+printf '%s\n' "$TAILSCALE_IP"
+```
+
+Verify SSH over Tailscale before changing the firewall:
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=8 codex@"$TAILSCALE_IP" 'hostname; whoami; codex --version'
+```
+
+If SSH reports a host-key mismatch, compare the public and Tailscale host keys before accepting the new host entry:
+
+```bash
+ssh-keyscan -T 5 -t ed25519 <SERVER_IP> "$TAILSCALE_IP"
+ssh -o StrictHostKeyChecking=accept-new codex@"$TAILSCALE_IP" 'hostname; whoami'
+```
+
+Then update the local SSH alias to use the Tailscale IP:
+
+```sshconfig
+Host <HOST_ALIAS>
+    HostName <TAILSCALE_IP>
+    User codex
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+```
+
+Finally, close public SSH and allow SSH only over `tailscale0`:
+
+```bash
+ssh <HOST_ALIAS> 'set -euo pipefail
+sudo -n ufw allow in on tailscale0 to any port 22 proto tcp comment "SSH over Tailscale"
+sudo -n ufw --force delete allow from <USER_PUBLIC_IPV4> to any port 22 proto tcp || true
+sudo -n ufw status numbered'
+```
+
+Verify that the alias still works and public SSH is blocked:
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=8 <HOST_ALIAS> 'hostname; whoami; sudo -n tailscale status --self; sudo -n ufw status numbered'
+nc -vz -G 5 <SERVER_IP> 22
+```
+
+The `nc` check should fail or time out. If it succeeds, public SSH is still exposed and the firewall rules need another pass.
+
+Disable Tailscale key expiry for long-lived remotes:
+
+1. Open Tailscale admin console > Machines.
+2. Find `<HOST_ALIAS>`.
+3. Open the device actions menu.
+4. Choose Disable key expiry.
+5. Confirm the machine row shows `Expiry disabled`.
+
 ## Install Agent Tooling
 
 Install common build and coding-agent dependencies:
@@ -220,6 +296,7 @@ python3 --version
 sudo -n sshd -T | egrep "^(permitrootlogin|passwordauthentication|allowusers|kbdinteractiveauthentication|pubkeyauthentication) "
 sudo -n ufw status verbose
 sudo -n fail2ban-client status sshd || true
+sudo -n tailscale status --self 2>/dev/null || true
 test -f /var/run/reboot-required && echo reboot-required || echo reboot-not-required'
 ```
 
@@ -230,6 +307,7 @@ Expected properties:
 - SSH config reports `permitrootlogin no`, `passwordauthentication no`, and `allowusers codex`.
 - UFW is active.
 - `ssh root@<SERVER_IP>` fails.
+- If Tailscale-only SSH was configured, `<HOST_ALIAS>` resolves to the Tailscale IP and public `<SERVER_IP>:22` times out.
 - `apt-get -s upgrade` shows no urgent pending upgrades, or the remaining work is reported clearly.
 
 If the user sees `No codex found in PATH`, install `@openai/codex` and recreate the `/usr/local/bin/codex` shim.

@@ -22,6 +22,7 @@ cp -r skills/hetzner-codex-remote ~/.codex/skills/hetzner-codex-remote/
 - A Hetzner Cloud account and project
 - Local SSH key, preferably Ed25519
 - Local `ssh` access to the new server
+- Optional: a Tailscale account if the remote should be reachable from changing networks without exposing public SSH
 - Optional: local `gh` authentication if the remote should clone private GitHub repositories
 
 ## Usage
@@ -32,7 +33,7 @@ Use this skill when you want an agent to configure a Hetzner server as a Codex r
 Set up this Hetzner VPS for secure Codex remote control.
 ```
 
-The workflow creates a dedicated `codex` user, disables password and root SSH login, configures UFW/fail2ban, installs common coding-agent tooling, installs the Codex CLI, verifies non-interactive SSH access, and optionally transfers GitHub CLI auth from the local machine to clone a repository.
+The workflow creates a dedicated `codex` user, disables password and root SSH login, configures UFW/fail2ban, installs common coding-agent tooling, installs the Codex CLI, verifies non-interactive SSH access, optionally moves SSH behind Tailscale-only access, and optionally transfers GitHub CLI auth from the local machine to clone a repository.
 
 ## License
 
